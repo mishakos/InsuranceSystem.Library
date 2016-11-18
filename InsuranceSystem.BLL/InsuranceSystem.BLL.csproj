@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5D09F307-9B53-4057-837D-31585B2A4458}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InsuranceSystem.BLL</RootNamespace>
+    <AssemblyName>InsuranceSystem.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\Dependencies\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Paginator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Paginator.1.1.2\lib\Paginator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfFileWriter">
+      <HintPath>..\Dependencies\PdfFileWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DTO\Catalogs\AddressDTO.cs" />
+    <Compile Include="DTO\Catalogs\AreaOfUseDTO.cs" />
+    <Compile Include="DTO\Catalogs\BankDTO.cs" />
+    <Compile Include="DTO\Catalogs\BankAccountDTO.cs" />
+    <Compile Include="DTO\Catalogs\BlankDTO.cs" />
+    <Compile Include="DTO\Catalogs\BlankTypeDTO.cs" />
+    <Compile Include="DTO\Catalogs\BonusMalusDTO.cs" />
+    <Compile Include="DTO\Catalogs\BrandDTO.cs" />
+    <Compile Include="DTO\Catalogs\CatalogDTO.cs" />
+    <Compile Include="DTO\Catalogs\ClientDTO.cs" />
+    <Compile Include="DTO\Catalogs\ContractTermDTO.cs" />
+    <Compile Include="DTO\Catalogs\CurrencyDTO.cs" />
+    <Compile Include="DTO\Catalogs\DepartmentDTO.cs" />
+    <Compile Include="DTO\Catalogs\DocumentCategoryDTO.cs" />
+    <Compile Include="DTO\Catalogs\DriverExperience.DTO.cs" />
+    <Compile Include="DTO\Catalogs\DriversNumberDTO.cs" />
+    <Compile Include="DTO\Catalogs\FirmDTO.cs" />
+    <Compile Include="DTO\Catalogs\FraudAttemptDTO.cs" />
+    <Compile Include="DTO\Catalogs\InsuranceProductDTO.cs" />
+    <Compile Include="DTO\Catalogs\InsuranceTypeDTO.cs" />
+    <Compile Include="DTO\Catalogs\LocalityVehicleRegistrationDTO.cs" />
+    <Compile Include="DTO\Catalogs\ModelDTO.cs" />
+    <Compile Include="DTO\Catalogs\PersonDTO.cs" />
+    <Compile Include="DTO\Catalogs\SalesOfficeDTO.cs" />
+    <Compile Include="DTO\Catalogs\StatusDTO.cs" />
+    <Compile Include="DTO\Catalogs\TerritoryRegistrationDTO.cs" />
+    <Compile Include="DTO\Catalogs\VehicleDTO.cs" />
+    <Compile Include="DTO\Catalogs\VehiclesNumberDTO.cs" />
+    <Compile Include="DTO\Documents\DocumentDTO.cs" />
+    <Compile Include="DTO\Documents\MoveBlankDTO.cs" />
+    <Compile Include="DTO\Documents\MoveBlankItemDTO.cs" />
+    <Compile Include="DTO\Documents\MTPLPolicyDTO.cs" />
+    <Compile Include="DTO\Documents\PostBlankDTO.cs" />
+    <Compile Include="DTO\Documents\PostBlankItemDTO.cs" />
+    <Compile Include="DTO\Enums\LegalTypeDTO.cs" />
+    <Compile Include="Infrastructure\ValidationException.cs" />
+    <Compile Include="Interfaces\Catalogs\IAreaOfUseService.cs" />
+    <Compile Include="Interfaces\Catalogs\IAddressService.cs" />
+    <Compile Include="Interfaces\Catalogs\IBankAccountService.cs" />
+    <Compile Include="Interfaces\Catalogs\IBankService.cs" />
+    <Compile Include="Interfaces\Catalogs\IBlankService.cs" />
+    <Compile Include="Interfaces\Catalogs\IBlankTypeService.cs" />
+    <Compile Include="Interfaces\Catalogs\IBonusMalusService.cs" />
+    <Compile Include="Interfaces\Catalogs\IBrandService.cs" />
+    <Compile Include="Interfaces\Catalogs\IClientService.cs" />
+    <Compile Include="Interfaces\Catalogs\IContractTermService.cs" />
+    <Compile Include="Interfaces\Catalogs\ICurrencyService.cs" />
+    <Compile Include="Interfaces\Catalogs\IDepartmentService.cs" />
+    <Compile Include="Interfaces\Catalogs\IDocumentCategoryService.cs" />
+    <Compile Include="Interfaces\Catalogs\IDriverExperienceService.cs" />
+    <Compile Include="Interfaces\Catalogs\IDriversNumberService.cs" />
+    <Compile Include="Interfaces\Catalogs\IFirmService.cs" />
+    <Compile Include="Interfaces\Catalogs\IFraudAttemptService.cs" />
+    <Compile Include="Interfaces\Catalogs\IInsuranceProductService.cs" />
+    <Compile Include="Interfaces\Catalogs\IInsuranceTypeService.cs" />
+    <Compile Include="Interfaces\Catalogs\ILocalityVehicleRegistrationService.cs" />
+    <Compile Include="Interfaces\Catalogs\IModelService.cs" />
+    <Compile Include="Interfaces\Catalogs\IPersonService.cs" />
+    <Compile Include="Interfaces\Catalogs\ISalesOfficeService.cs" />
+    <Compile Include="Interfaces\Catalogs\IStatusService.cs" />
+    <Compile Include="Interfaces\Catalogs\ITerritoryRegistrationService.cs" />
+    <Compile Include="Interfaces\Catalogs\IVehicleService.cs" />
+    <Compile Include="Interfaces\Catalogs\IVehiclesNumberService.cs" />
+    <Compile Include="Interfaces\Documents\IMoveBlankService.cs" />
+    <Compile Include="Interfaces\Documents\IMTPLPolicyService.cs" />
+    <Compile Include="Interfaces\Documents\IPostBlankService.cs" />
+    <Compile Include="Interfaces\IService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Services\Catalogs\AddressService.cs" />
+    <Compile Include="Services\Catalogs\AreaOfUseService.cs" />
+    <Compile Include="Services\Catalogs\BankAccountService.cs" />
+    <Compile Include="Services\Catalogs\BankService.cs" />
+    <Compile Include="Services\Catalogs\BlankService.cs" />
+    <Compile Include="Services\Catalogs\BlankTypeService.cs" />
+    <Compile Include="Services\Catalogs\BonusMalusService.cs" />
+    <Compile Include="Services\Catalogs\BrandService.cs" />
+    <Compile Include="Services\Catalogs\ClientService.cs" />
+    <Compile Include="Services\Catalogs\ContractTermService.cs" />
+    <Compile Include="Services\Catalogs\CurrencyService.cs" />
+    <Compile Include="Services\Catalogs\DepartmentService.cs" />
+    <Compile Include="Services\Catalogs\DocumentCategoryService.cs" />
+    <Compile Include="Services\Catalogs\DriverExperienceService.cs" />
+    <Compile Include="Services\Catalogs\DriversNumberService.cs" />
+    <Compile Include="Services\Catalogs\FirmService.cs" />
+    <Compile Include="Services\Catalogs\FraudAttemptService.cs" />
+    <Compile Include="Services\Catalogs\InsuranceProductService.cs" />
+    <Compile Include="Services\Catalogs\InsuranceTypeService.cs" />
+    <Compile Include="Services\Catalogs\LVRegistrationService.cs" />
+    <Compile Include="Services\Catalogs\ModelService.cs" />
+    <Compile Include="Services\Catalogs\PersonService.cs" />
+    <Compile Include="Services\Catalogs\SalesOfficeService.cs" />
+    <Compile Include="Services\Catalogs\StatusService.cs" />
+    <Compile Include="Services\Catalogs\TerritoryRegistrationService.cs" />
+    <Compile Include="Services\Catalogs\VehicleService.cs" />
+    <Compile Include="Services\Catalogs\VehiclesNumberService.cs" />
+    <Compile Include="Services\Documents\MoveBlankService.cs" />
+    <Compile Include="Services\Documents\MTPLPolicyService.cs" />
+    <Compile Include="Services\Documents\PostBlankService.cs" />
+    <Compile Include="Validation\CheckValues.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InsuranceSystem.Common\InsuranceSystem.Common.csproj">
+      <Project>{3068bf6a-7c36-4cbe-91e0-dec7e2328d3a}</Project>
+      <Name>InsuranceSystem.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InsuranceSystem.Library\InsuranceSystem.Library.csproj">
+      <Project>{9404a89a-f362-418d-9011-0134f3373a9f}</Project>
+      <Name>InsuranceSystem.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InsuranceSystem.UnitOfWork\InsuranceSystem.UnitOfWork.csproj">
+      <Project>{ade940cf-1d91-4b52-ba4f-3c052cc4e037}</Project>
+      <Name>InsuranceSystem.UnitOfWork</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\Registries\" />
+    <Folder Include="Services\Registries\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
