@@ -222,6 +222,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Catalogs\BankController.cs" />
+    <Compile Include="Controllers\Catalogs\BlankController.cs" />
     <Compile Include="Controllers\Documents\PostBlankController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -352,6 +353,7 @@
     <Content Include="Views\Bank\Edit.cshtml" />
     <Content Include="Views\Bank\Delete.cshtml" />
     <Content Include="Views\PostBlank\Index.cshtml" />
+    <Content Include="Views\Blank\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
