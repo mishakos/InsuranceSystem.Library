@@ -23,7 +23,10 @@
 
         public int Delete(FraudAttemptDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            faUnit.Repository.Delete(entity.Id);
+            return faUnit.Commit();
         }
 
         public int Delete(int? id)
