@@ -1,16 +1,16 @@
 ﻿namespace InsuranceSystem.BLL.Services.Catalogs
 {
-    using AutoMapper;
-    using DTO.Catalogs;
-    using Interfaces.Catalogs;
-    using Library.Models.Catalogs;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DTO.Catalogs;
+    using Interfaces;
+    using Interfaces.Catalogs;
+    using Library.Models.Catalogs;
+    using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    using Interfaces;
-    using UnitOfWork;
-    using System.Threading.Tasks;
 
     public class FraudAttemptService : IFraudAttemptService, IService<FraudAttemptDTO>
     {
@@ -18,6 +18,7 @@
 
         public FraudAttemptService()
         {
+            Mapper.CreateMap<FraudAttempt, FraudAttemptDTO>();
             faUnit = new FraudAttemptUnit();
         }
 
@@ -31,17 +32,24 @@
 
         public int Delete(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            faUnit.Repository.Delete((int)id);
+            return faUnit.Commit();
         }
 
-        public Task<int> DeleteAsync(FraudAttemptDTO entity)
+        public async Task<int> DeleteAsync(FraudAttemptDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            faUnit.Repository.Delete(entity.Id);
+            return await faUnit.CommitAsync();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            faUnit.Repository.Delete((int)id);
+            return await faUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -51,48 +59,90 @@
 
         public IEnumerable<FraudAttemptDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<FraudAttempt>, IEnumerable<FraudAttemptDTO>>(faUnit
+                .Repository.GetAll());
         }
 
-        public Task<List<FraudAttemptDTO>> GetAllAsync()
+        public async Task<List<FraudAttemptDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Mapper.Map<Task<List<FraudAttempt>>, Task<List<FraudAttemptDTO>>>(faUnit
+                .Repository.GetAllAsync());
         }
 
         public FraudAttemptDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<FraudAttemptDTO>(faUnit.Repository.GetById((int)id));
         }
 
-        public Task<FraudAttemptDTO> GetByIdAsync(int? id)
+        public async Task<FraudAttemptDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            
+            return await Mapper.Map<Task<FraudAttemptDTO>>(faUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public Task<List<FraudAttemptDTO>> GetByNameAsync(string name)
+        public async Task<List<FraudAttemptDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await Mapper.Map<Task<List<FraudAttemptDTO>>>(faUnit.Repository
+                .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(FraudAttemptDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            FraudAttempt item = MapNewItem(entity);
+            faUnit.Repository.Insert(item);
+            return faUnit.Commit();
         }
 
-        public Task<int> InsertAsync(FraudAttemptDTO entity)
+        private static FraudAttempt MapNewItem(FraudAttemptDTO entity)
         {
-            throw new NotImplementedException();
+            var item = new FraudAttempt();
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.DateCreate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+            return item;
+        }
+
+        public async Task<int> InsertAsync(FraudAttemptDTO entity)
+        {
+            CheckForNull(entity);
+            FraudAttempt item = MapNewItem(entity);
+            faUnit.Repository.Insert(item);
+            return await faUnit.CommitAsync();
         }
 
         public int Update(FraudAttemptDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var item = faUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            return faUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(FraudAttemptDTO entity)
+        private void MapExistingItem(FraudAttemptDTO entity, FraudAttempt item)
         {
-            throw new NotImplementedException();
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+            faUnit.Repository.Update(item);
         }
-    
+
+        public async Task<int> UpdateAsync(FraudAttemptDTO entity)
+        {
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var item = faUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            return await faUnit.CommitAsync();
+        }
+
     }
 }

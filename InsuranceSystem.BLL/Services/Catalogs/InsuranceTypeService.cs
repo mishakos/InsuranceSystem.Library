@@ -1,16 +1,16 @@
 ﻿namespace InsuranceSystem.BLL.Services.Catalogs
 {
-    using AutoMapper;
-    using DTO.Catalogs;
-    using Interfaces.Catalogs;
-    using Library.Models.Catalogs;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DTO.Catalogs;
+    using Interfaces;
+    using Interfaces.Catalogs;
+    using Library.Models.Catalogs;
+    using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    using Interfaces;
-    using System.Threading.Tasks;
-    using UnitOfWork;
 
     public class InsuranceTypeService : IInsuranceTypeService, IService<InsuranceTypeDTO>
     {
@@ -18,27 +18,38 @@
 
         public InsuranceTypeService()
         {
+            Mapper.CreateMap<InsuranceType, InsuranceTypeDTO>();
             itUnit = new InsuranceTypeUnit();
         }
 
         public int Delete(InsuranceTypeDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            itUnit.Repository.Delete(entity.Id);
+            return itUnit.Commit();
         }
 
         public int Delete(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            itUnit.Repository.Delete((int)id);
+            return itUnit.Commit();
         }
 
-        public Task<int> DeleteAsync(InsuranceTypeDTO entity)
+        public async Task<int> DeleteAsync(InsuranceTypeDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            itUnit.Repository.Delete(entity.Id);
+            return await itUnit.CommitAsync();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            itUnit.Repository.Delete((int)id);
+            return await itUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -48,47 +59,87 @@
 
         public IEnumerable<InsuranceTypeDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<InsuranceTypeDTO>>(itUnit.Repository.GetAll());
         }
 
-        public Task<List<InsuranceTypeDTO>> GetAllAsync()
+        public async Task<List<InsuranceTypeDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Mapper.Map<Task<List<InsuranceTypeDTO>>>(itUnit.Repository.GetAllAsync());
         }
 
         public InsuranceTypeDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<InsuranceTypeDTO>(itUnit.Repository.GetById((int)id));
         }
 
-        public Task<InsuranceTypeDTO> GetByIdAsync(int? id)
+        public async Task<InsuranceTypeDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return await Mapper.Map<Task<InsuranceTypeDTO>>(itUnit.Repository.GetAsync((p => p.Id == id)));
         }
 
-        public Task<List<InsuranceTypeDTO>> GetByNameAsync(string name)
+        public async Task<List<InsuranceTypeDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await Mapper.Map<Task<List<InsuranceTypeDTO>>>(itUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
+            .Contains(name.ToUpper())));
         }
 
         public int Insert(InsuranceTypeDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            InsuranceType item = MapNewItem(entity);
+            itUnit.Repository.Insert(item);
+            return itUnit.Commit();
         }
 
-        public Task<int> InsertAsync(InsuranceTypeDTO entity)
+        private static InsuranceType MapNewItem(InsuranceTypeDTO entity)
         {
-            throw new NotImplementedException();
+            var item = new InsuranceType();
+            item.DateCreate = DateTime.Now;
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+            return item;
+        }
+
+        public async Task<int> InsertAsync(InsuranceTypeDTO entity)
+        {
+            CheckForNull(entity);
+            InsuranceType item = MapNewItem(entity);
+            itUnit.Repository.Insert(item);
+            return await itUnit.CommitAsync();
         }
 
         public int Update(InsuranceTypeDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var item = itUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            itUnit.Repository.Update(item);
+            return itUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(InsuranceTypeDTO entity)
+        private static void MapExistingItem(InsuranceTypeDTO entity, InsuranceType item)
         {
-            throw new NotImplementedException();
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> UpdateAsync(InsuranceTypeDTO entity)
+        {
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var item = itUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            itUnit.Repository.Update(item);
+            return await itUnit.CommitAsync();
         }
     }
 }
