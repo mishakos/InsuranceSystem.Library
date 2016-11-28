@@ -1,26 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using InsuranceSystem.BLL.Interfaces.Catalogs;
+using InsuranceSystem.BLL.DTO.Catalogs;
+using InsuranceSystem.BLL.Interfaces;
 using InsuranceSystem.BLL.Services.Catalogs;
+using InsuranceSystem.MVC.Models.Catalogs;
 
 namespace InsuranceSystem.Mvc.Controllers.Catalogs
 {
     public class BlankController : Controller
     {
-        private IBlankService blankService;
+        private IService<BlankDTO> blankService;
 
         public BlankController()
         {
             blankService = new BlankService();
         }
         // GET: Blank
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-
-            return View();
+            var items = await blankService.GetAllAsync();
+            AutoMapper.Mapper.Initialize(c => c.CreateMap<BlankDTO, BlankModel>());
+            return View(AutoMapper.Mapper.Map<Task<IEnumerable<BlankModel>>>(items));
         }
 
         // GET: Blank/Details/5

@@ -62,7 +62,7 @@
 
         public async Task<List<BlankDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<Blank, BlankDTO>();
+            Mapper.CreateMap<Task<Blank>, Task<BlankDTO>>();
             return await Mapper.Map<Task<List<Blank>>, Task<List<BlankDTO>>>
                 (blankUnit.Repository.GetAllAsync());
         }
