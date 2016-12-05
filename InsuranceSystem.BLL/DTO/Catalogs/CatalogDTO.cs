@@ -10,7 +10,9 @@
         public DateTime DateCreate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public bool IsGroup { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
+        public string ParentName { get; set; }
+        
 
     }
 }

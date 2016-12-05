@@ -96,6 +96,7 @@
     <Compile Include="DTO\Documents\PostBlankDTO.cs" />
     <Compile Include="DTO\Documents\PostBlankItemDTO.cs" />
     <Compile Include="DTO\Enums\LegalTypeDTO.cs" />
+    <Compile Include="Infrastructure\AutoMapperConfig.cs" />
     <Compile Include="Infrastructure\ValidationException.cs" />
     <Compile Include="Interfaces\Catalogs\IAreaOfUseService.cs" />
     <Compile Include="Interfaces\Catalogs\IAddressService.cs" />

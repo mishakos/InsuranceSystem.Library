@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using InsuranceSystem.BLL.DTO.Catalogs;
 using InsuranceSystem.BLL.Interfaces;
 using InsuranceSystem.BLL.Services.Catalogs;
@@ -23,79 +24,86 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         public async Task<ActionResult> Index()
         {
             var items = await blankService.GetAllAsync();
-            AutoMapper.Mapper.Initialize(c => c.CreateMap<BlankDTO, BlankModel>());
-            return View(AutoMapper.Mapper.Map<Task<IEnumerable<BlankModel>>>(items));
+            return View(Mapper.Map<IEnumerable<BlankDTO>, List<BlankModel>>(items));
         }
 
         // GET: Blank/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var blankDto = await blankService.GetByIdAsync(id);
+            var model = Mapper.Map<BlankDTO, BlankModel>(blankDto);
+            return View(model);
         }
 
         // GET: Blank/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new BlankModel();
+            return View(model);
         }
 
         // POST: Blank/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create([Bind(Exclude = "Id, DateCreate, ModifiedDate")]BlankModel model)
         {
             try
             {
-                // TODO: Add insert logic here
 
+
+                var blank = Mapper.Map<BlankModel, BlankDTO>(model);
+                await blankService.InsertAsync(blank);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
         // GET: Blank/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var model = Mapper.Map<BlankModel>(await blankService.GetByIdAsync(id));
+            return View(model);
         }
 
         // POST: Blank/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, BlankModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                var blankDto = Mapper.Map<BlankDTO>(model);
+                await blankService.UpdateAsync(blankDto);
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
         // GET: Blank/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var model = Mapper.Map<BlankModel>(await blankService.GetByIdAsync(id));
+            return View(model);
         }
 
         // POST: Blank/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, BlankModel model)
         {
             try
             {
-                // TODO: Add delete logic here
+                await blankService.DeleteAsync(id);
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
     }

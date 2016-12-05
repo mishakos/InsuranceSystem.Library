@@ -20,26 +20,25 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         }
 
         // GET: Bank
-        public  ActionResult Index(string sortOrder)
+        public async System.Threading.Tasks.Task<ActionResult> Index(string sortOrder)
         {
             ViewBag.MFOSortParam = String.IsNullOrEmpty(sortOrder) ? "mfo_desc" : "";
             ViewBag.NameSortParam = sortOrder == "Name" ? "name_desc" : "Name";
             ViewBag.RateSortParam = sortOrder == "Rate" ? "rate_desc" : "Rate";
 
-            
+
 
             var list = new List<BankModel>();
             try
             {
-                var collection = bankService.GetAll();
-                Mapper.Initialize(p => p.CreateMap<BankDTO, BankModel>());
-                list = Mapper.Map<IEnumerable<BankDTO>, List<BankModel>>(collection);
+                var collection = await bankService.GetAllAsync();
+                list = Mapper.Map<List<BankDTO>, List<BankModel>>(collection);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", $"Unable to get list of banks. Detail info - {ex.Message}");
             }
-           
+
             switch (sortOrder)
             {
                 case "":
@@ -49,7 +48,7 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
                     }
                 case "mfo_desc":
                     {
-                        list = (List<BankModel>)list.OrderByDescending(p => p.MFO); 
+                        list = (List<BankModel>)list.OrderByDescending(p => p.MFO);
                         break;
                     }
                 case "Name":
@@ -84,7 +83,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             try
             {
                 var item = bankService.GetById(id);
-                Mapper.Initialize(p => p.CreateMap<BankDTO, BankModel>());
                 model = Mapper.Map<BankDTO, BankModel>(item);
                 return View(model);
             }
@@ -108,7 +106,7 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         {
             try
             {
-                Mapper.Initialize(p => p.CreateMap<BankModel, BankDTO>());
+                
                 bankService.Insert(Mapper.Map<BankModel, BankDTO>(model));
                 return RedirectToAction("Index");
             }
@@ -126,7 +124,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             try
             {
                 var item = bankService.GetById(id);
-                Mapper.Initialize(p => p.CreateMap<BankDTO, BankModel>());
                 model = Mapper.Map<BankDTO, BankModel>(item);
             }
             catch (Exception ex)
