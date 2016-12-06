@@ -48,8 +48,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         {
             try
             {
-
-
                 var blank = Mapper.Map<BlankModel, BlankDTO>(model);
                 await blankService.InsertAsync(blank);
                 return RedirectToAction("Index");
@@ -75,7 +73,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             {
                 var blankDto = Mapper.Map<BlankDTO>(model);
                 await blankService.UpdateAsync(blankDto);
-
                 return RedirectToAction("Index");
             }
             catch
@@ -98,7 +95,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             try
             {
                 await blankService.DeleteAsync(id);
-
                 return RedirectToAction("Index");
             }
             catch

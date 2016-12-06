@@ -28,9 +28,10 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         }
 
         // GET: BlancType/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var blankType = Mapper.Map<BlankTypeModel>(await _service.GetByIdAsync(id));
+            return View(blankType);
         }
 
         // GET: BlancType/Create
@@ -61,46 +62,55 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         }
 
         // GET: BlancType/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var model = Mapper.Map<BlankTypeModel>(await _service.GetByIdAsync(id));
+            return View(model);
         }
 
         // POST: BlancType/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, BlankTypeModel model)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var blankTypeDTO = Mapper.Map<BlankTypeDTO>(model);
+                    await _service.UpdateAsync(blankTypeDTO);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(model);
+                }
+                
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
         // GET: BlancType/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var model = Mapper.Map<BlankTypeModel>(await _service.GetByIdAsync(id));
+            return View(model);
         }
 
         // POST: BlancType/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, BlankTypeModel model)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                await _service.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
     }

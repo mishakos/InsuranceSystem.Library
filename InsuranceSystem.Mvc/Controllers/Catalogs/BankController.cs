@@ -25,9 +25,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             ViewBag.MFOSortParam = String.IsNullOrEmpty(sortOrder) ? "mfo_desc" : "";
             ViewBag.NameSortParam = sortOrder == "Name" ? "name_desc" : "Name";
             ViewBag.RateSortParam = sortOrder == "Rate" ? "rate_desc" : "Rate";
-
-
-
             var list = new List<BankModel>();
             try
             {
@@ -105,8 +102,7 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         public ActionResult Create([Bind(Exclude = "Id, DateCreate, ModifiedDate")] BankModel model)
         {
             try
-            {
-                
+            {                
                 bankService.Insert(Mapper.Map<BankModel, BankDTO>(model));
                 return RedirectToAction("Index");
             }
@@ -186,7 +182,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             try
             {
                 bankService.Delete(model.Id);
-
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

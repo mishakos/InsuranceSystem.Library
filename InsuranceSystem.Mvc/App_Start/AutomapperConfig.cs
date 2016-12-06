@@ -12,19 +12,17 @@ namespace InsuranceSystem.Mvc.App_Start
     {
         public static void RegisterMapping()
         {
-            Mapper.CreateMap<BankDTO, BankModel>().ReverseMap()
-                .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
-                .ForSourceMember(src => src.Id, opt => opt.Ignore())
-                .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
-            Mapper.CreateMap<BlankDTO, BlankModel>().ReverseMap()
-                .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
-                .ForSourceMember(src => src.Id, opt => opt.Ignore())
-                .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
-            Mapper.CreateMap<BlankTypeDTO, BlankTypeModel>().ReverseMap()
-                .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
-                .ForSourceMember(src => src.Id, opt => opt.Ignore())
-                .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
-            Mapper.CreateMap<BrandDTO, BrandModel>().ReverseMap()
+            CreateMap<BlankDTO, BlankModel>();
+            CreateMap<BlankTypeDTO, BlankTypeModel>();
+            CreateMap<BrandDTO, BrandModel>();
+            CreateMap<BonusMalusDTO, BonusMalusModel>();
+            //CreateMap<BlankDTO, BlankModel>();
+
+        }
+
+        private static void CreateMap<T, U>() where T : CatalogDTO where U : CatalogModel
+        {
+            Mapper.CreateMap<T, U>().ReverseMap()
                 .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
                 .ForSourceMember(src => src.Id, opt => opt.Ignore())
                 .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
