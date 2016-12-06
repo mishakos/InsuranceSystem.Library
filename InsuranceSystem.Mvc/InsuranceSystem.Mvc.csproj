@@ -52,8 +52,8 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
@@ -215,6 +215,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -222,12 +223,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Catalogs\BankController.cs" />
+    <Compile Include="Controllers\Catalogs\BlankTypeController.cs" />
+    <Compile Include="Controllers\Catalogs\BlankController.cs" />
     <Compile Include="Controllers\Documents\PostBlankController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Catalogs\AdressModel.cs" />
     <Compile Include="Models\Catalogs\AreaOfUseModel.cs" />
@@ -352,6 +356,13 @@
     <Content Include="Views\Bank\Edit.cshtml" />
     <Content Include="Views\Bank\Delete.cshtml" />
     <Content Include="Views\PostBlank\Index.cshtml" />
+    <Content Include="Views\Blank\Index.cshtml" />
+    <Content Include="Views\Blank\Details.cshtml" />
+    <Content Include="Views\Blank\Create.cshtml" />
+    <Content Include="Views\BlankType\Index.cshtml" />
+    <Content Include="Views\BlankType\Create.cshtml" />
+    <Content Include="Views\Blank\Edit.cshtml" />
+    <Content Include="Views\Blank\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,27 +19,36 @@
 
         public ModelService()
         {
+            Mapper.CreateMap<Model, ModelDTO>();
             mUnit = new ModelUnit();
         }
 
         public int Delete(ModelDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            mUnit.Repository.Delete(entity.Id);
+            return mUnit.Commit();
         }
 
         public int Delete(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            mUnit.Repository.Delete((int)id);
+            return mUnit.Commit();
         }
 
-        public Task<int> DeleteAsync(ModelDTO entity)
+        public async Task<int> DeleteAsync(ModelDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            mUnit.Repository.Delete(entity.Id);
+            return await mUnit.CommitAsync();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            mUnit.Repository.Delete((int)id);
+            return await mUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -49,47 +58,89 @@
 
         public IEnumerable<ModelDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<ModelDTO>>(mUnit.Repository.GetAll());
         }
 
-        public Task<List<ModelDTO>> GetAllAsync()
+        public async Task<List<ModelDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Mapper.Map<Task<List<ModelDTO>>>(mUnit.Repository.GetAllAsync());
         }
 
         public ModelDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<ModelDTO>(mUnit.Repository.GetById((int)id));
         }
 
-        public Task<ModelDTO> GetByIdAsync(int? id)
+        public async Task<ModelDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return await Mapper.Map<Task<ModelDTO>>(mUnit.Repository.GetAsync(p => p.Id == id));
         }
 
         public Task<List<ModelDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<Task<List<ModelDTO>>>(mUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
+            .Contains(name.ToUpper())));
         }
 
         public int Insert(ModelDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            var item = new Model();
+            MapNewItem(entity, item);
+            mUnit.Repository.Insert(item);
+            return mUnit.Commit();
         }
 
-        public Task<int> InsertAsync(ModelDTO entity)
+        private static void MapNewItem(ModelDTO entity, Model item)
         {
-            throw new NotImplementedException();
+            item.DateCreate = DateTime.Now;
+            item.BrandId = entity.BrandId;
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> InsertAsync(ModelDTO entity)
+        {
+            CheckForNull(entity);
+            var item = new Model();
+            MapNewItem(entity, item);
+            mUnit.Repository.Insert(item);
+            return await mUnit.CommitAsync();
         }
 
         public int Update(ModelDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var item = mUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            mUnit.Repository.Update(item);
+            return mUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(ModelDTO entity)
+        private static void MapExistingItem(ModelDTO entity, Model item)
         {
-            throw new NotImplementedException();
+            item.BrandId = entity.BrandId;
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> UpdateAsync(ModelDTO entity)
+        {
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var item = mUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            mUnit.Repository.Update(item);
+            return await mUnit.CommitAsync();
         }
     }
 }

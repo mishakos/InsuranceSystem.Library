@@ -21,7 +21,8 @@ namespace InsuranceSystem.Library.Models.Catalogs
         [Required]
         public DateTime ModifiedDate { get; set; }
         public bool IsGroup { get; set; }
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
+        
 
     }
 }

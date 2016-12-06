@@ -1,16 +1,16 @@
 ﻿namespace InsuranceSystem.BLL.Services.Catalogs
 {
-    using AutoMapper;
-    using DTO.Catalogs;
-    using Interfaces.Catalogs;
-    using Library.Models.Catalogs;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DTO.Catalogs;
+    using Interfaces;
+    using Interfaces.Catalogs;
+    using Library.Models.Catalogs;
+    using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    using Interfaces;
-    using System.Threading.Tasks;
-    using UnitOfWork;
 
     public class LVRegistrationService : ILocalityVehicleRegistrationService, IService<LocalityVehicleRegistrationDTO>
     {
@@ -18,27 +18,38 @@
 
         public LVRegistrationService()
         {
+            Mapper.CreateMap<LocalityVehicleRegistration, LocalityVehicleRegistrationDTO>();
             lvrUnit = new LocalityVehicleRegistrationUnit();
         }
 
         public int Delete(LocalityVehicleRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            lvrUnit.Repository.Delete(entity.Id);
+            return lvrUnit.Commit();
         }
 
         public int Delete(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            lvrUnit.Repository.Delete((int)id);
+            return lvrUnit.Commit();
         }
 
-        public Task<int> DeleteAsync(LocalityVehicleRegistrationDTO entity)
+        public async Task<int> DeleteAsync(LocalityVehicleRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            lvrUnit.Repository.Delete(entity.Id);
+            return await lvrUnit.CommitAsync();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            lvrUnit.Repository.Delete((int)id);
+            return await lvrUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -48,47 +59,85 @@
 
         public IEnumerable<LocalityVehicleRegistrationDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<LocalityVehicleRegistrationDTO>>(lvrUnit.Repository.GetAll());
         }
 
-        public Task<List<LocalityVehicleRegistrationDTO>> GetAllAsync()
+        public async Task<List<LocalityVehicleRegistrationDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Mapper.Map<Task<List<LocalityVehicleRegistrationDTO>>>(lvrUnit.Repository.GetAllAsync());
         }
 
         public LocalityVehicleRegistrationDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<LocalityVehicleRegistrationDTO>(lvrUnit.Repository.GetById((int)id));
         }
 
         public Task<LocalityVehicleRegistrationDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map< Task<LocalityVehicleRegistrationDTO>>(lvrUnit.Repository.GetAsync(p => p.Id == id));
         }
 
         public Task<List<LocalityVehicleRegistrationDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<Task<List<LocalityVehicleRegistrationDTO>>>(lvrUnit.Repository.GetManyAsync(p => p.Name
+            .ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(LocalityVehicleRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            var item = new LocalityVehicleRegistration();
+            MapNewItem(entity, item);
+            lvrUnit.Repository.Insert(item);
+            return lvrUnit.Commit();
         }
 
-        public Task<int> InsertAsync(LocalityVehicleRegistrationDTO entity)
+        private static void MapNewItem(LocalityVehicleRegistrationDTO entity, LocalityVehicleRegistration item)
         {
-            throw new NotImplementedException();
+            item.DateCreate = DateTime.Now;
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> InsertAsync(LocalityVehicleRegistrationDTO entity)
+        {
+            CheckForNull(entity);
+            var item = new LocalityVehicleRegistration();
+            MapNewItem(entity, item);
+            lvrUnit.Repository.Insert(item);
+            return await lvrUnit.CommitAsync();
         }
 
         public int Update(LocalityVehicleRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            var item = lvrUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            lvrUnit.Repository.Update(item);
+            return lvrUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(LocalityVehicleRegistrationDTO entity)
+        private static void MapExistingItem(LocalityVehicleRegistrationDTO entity, LocalityVehicleRegistration item)
         {
-            throw new NotImplementedException();
+            item.IsDelete = entity.IsDelete;
+            item.IsGroup = entity.IsGroup;
+            item.ModifiedDate = DateTime.Now;
+            item.Name = entity.Name;
+            item.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> UpdateAsync(LocalityVehicleRegistrationDTO entity)
+        {
+            CheckForNull(entity);
+            var item = lvrUnit.Repository.GetById(entity.Id);
+            MapExistingItem(entity, item);
+            lvrUnit.Repository.Update(item);
+            return await lvrUnit.CommitAsync();
         }
     }
 }

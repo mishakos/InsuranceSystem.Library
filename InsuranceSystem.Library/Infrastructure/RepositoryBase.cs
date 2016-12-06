@@ -79,7 +79,7 @@ namespace InsuranceSystem.Library.Infrastructure
 
         public async Task<List<TEntity>> GetAllAsync()
         {
-            return await Dbset.ToListAsync();
+            return await Dbset.ToListAsync<TEntity>();
         }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> @where)

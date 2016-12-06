@@ -64,8 +64,8 @@ namespace InsuranceSystem.BLL.Services.Catalogs
         public async Task<List<BlankTypeDTO>> GetAllAsync()
         {
             Mapper.CreateMap<BlankType, BlankTypeDTO>();
-            return await Mapper.Map<Task<List<BlankType>>, Task<List<BlankTypeDTO>>>
-                (blankTypeUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<BlankType>, List<BlankTypeDTO>>
+                ( await blankTypeUnit.Repository.GetAllAsync());
         }
 
         public BlankTypeDTO GetById(int? id)
