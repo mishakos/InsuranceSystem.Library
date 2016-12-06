@@ -1,17 +1,17 @@
 ﻿namespace InsuranceSystem.BLL.Services.Catalogs
 {
-    using AutoMapper;
-    using DTO.Catalogs;
-    using Library.Models.Enums;
-    using Interfaces.Catalogs;
-    using Library.Models.Catalogs;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DTO.Catalogs;
+    using Interfaces;
+    using Interfaces.Catalogs;
+    using Library.Models.Catalogs;
+    using Library.Models.Enums;
+    using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    using UnitOfWork;
-    using Interfaces;
-    using System.Threading.Tasks;
 
     public class FirmService : IFirmService, IService<FirmDTO>
     {

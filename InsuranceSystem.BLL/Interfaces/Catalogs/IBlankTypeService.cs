@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IBlankTypeService
+    public interface IBlankTypeService : IService<BlankTypeDTO>
     {
     }
 }

@@ -10,9 +10,9 @@ namespace InsuranceSystem.Library.DataLayer.Configurations.CatalogsConfiguration
     {
         public BlankConfiguration()
         {
-            this.HasRequired(a => a.BlankType)
-                .WithMany()
-                .HasForeignKey(a => a.BlankTypeId);
+            //this.HasOptional(a => a.BlankType)
+            //    .WithMany()
+            //    .HasForeignKey(a => a.BlankTypeId);
         }
 
         public void AddConfiguration(ConfigurationRegistrar registrar)

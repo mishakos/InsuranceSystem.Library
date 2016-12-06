@@ -10,6 +10,7 @@
     public class BonusMalus : Catalog
     {
         public virtual List<MTPLPolicy> MTPLPolices { get; set; }
+        public virtual BonusMalus Parent { get; set; }
 
     }
 }
