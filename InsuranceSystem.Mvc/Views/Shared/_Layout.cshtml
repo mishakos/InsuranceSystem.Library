@@ -24,6 +24,16 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="class=dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
+                           aria-expanded="false">Catalogs<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Banks", "Index", "Bank")</li>
+                            <li>@Html.ActionLink("Blanks", "Index", "Blank")</li>
+                            <li>@Html.ActionLink("Blank Types", "Index", "BlankType")</li>
+                        </ul>
+                        </li>
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

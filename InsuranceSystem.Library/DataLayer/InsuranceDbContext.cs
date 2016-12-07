@@ -12,7 +12,7 @@ namespace InsuranceSystem.Library.DataLayer
     public class InsuranceDbContext : DbContext
     {
         public InsuranceDbContext() 
-            : base("InsuranceDbContext")
+            : base("InsuranceDb")
         {
         }
         // Catalogs

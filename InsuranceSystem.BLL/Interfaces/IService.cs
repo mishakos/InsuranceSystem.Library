@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InsuranceSystem.BLL.Interfaces
 {
-    interface IService<TEntity> where TEntity : class
+    public interface IService<TEntity> where TEntity : class
     {
         TEntity GetById(int? id);
 

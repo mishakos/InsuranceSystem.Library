@@ -1,17 +1,16 @@
 ﻿namespace InsuranceSystem.BLL.Services.Catalogs
 {
-    using AutoMapper;
-    using DTO.Catalogs;
-    using Infrastructure;
-    using Interfaces.Catalogs;
-    using Library.Models.Catalogs;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using DTO.Catalogs;
+    using Interfaces;
+    using Interfaces.Catalogs;
+    using Library.Models.Catalogs;
+    using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    using System.Threading.Tasks;
-    using Interfaces;
-    using UnitOfWork;
     public class DepartmentService : IDepartmentService, IService<DepartmentDTO>
     {
         readonly IUnitOfWork<Department> departmentUnit;

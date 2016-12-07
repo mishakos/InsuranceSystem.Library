@@ -9,6 +9,7 @@ namespace InsuranceSystem.Library.Models.Catalogs
 {
     public class Bank : Catalog
     {
+        public virtual Bank Parent { get; set; }
         [MaxLength(6)]
         public string MFO { get; set; }
         [MaxLength(1024)]
