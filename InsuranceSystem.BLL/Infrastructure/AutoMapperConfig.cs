@@ -37,6 +37,16 @@ namespace InsuranceSystem.BLL.Infrastructure
                 .ReverseMap().ForSourceMember(src => src.Id, opt => opt.Ignore())
                              .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
                              .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
+            Mapper.CreateMap<BlankType, BlankTypeDTO>()
+               .ForMember(dest => dest.ParentName, opt => opt.MapFrom(src => src.Parent.Name))
+               .ReverseMap().ForSourceMember(src => src.Id, opt => opt.Ignore())
+                            .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
+                            .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
+            Mapper.CreateMap<Brand, BrandDTO>()
+                .ForMember(dest => dest.ParentName, opt => opt.MapFrom(src => src.Parent.Name))
+                .ReverseMap().ForSourceMember(src => src.Id, opt => opt.Ignore())
+                            .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
+                            .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
         }
 
         public static AutoMapperConfig Instance
