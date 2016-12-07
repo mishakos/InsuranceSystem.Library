@@ -365,6 +365,7 @@
     <Content Include="Views\Blank\Delete.cshtml" />
     <Content Include="Views\BlankType\Details.cshtml" />
     <Content Include="Views\BlankType\Edit.cshtml" />
+    <Content Include="Views\BlankType\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
