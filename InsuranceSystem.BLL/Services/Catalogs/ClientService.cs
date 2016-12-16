@@ -12,7 +12,7 @@
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
 
-    public class ClientService : IClientService, IService<ClientDTO>
+    public class ClientService : IClientService
     {
         readonly IUnitOfWork<Client> clientUnit;
 

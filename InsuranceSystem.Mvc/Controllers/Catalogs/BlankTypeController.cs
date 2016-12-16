@@ -15,9 +15,9 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
     public class BlankTypeController : Controller
     {
         private IBlankTypeService _service;
-        public BlankTypeController()
+        public BlankTypeController(IBlankTypeService service)
         {
-            _service = new BlankTypeService();
+            _service = service;
         }
 
         // GET: BlancType
