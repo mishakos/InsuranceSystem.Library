@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    interface IAreaOfUseService
+    public interface IAreaOfUseService : IService<AreaOfUseDTO>
     {
         Task<List<AreaOfUseDTO>> GetByParentAsync(int? id);
     }

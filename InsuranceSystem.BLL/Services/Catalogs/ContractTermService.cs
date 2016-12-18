@@ -12,7 +12,7 @@
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
 
-    public class ContractTermService : IContractTermService, IService<ContractTermDTO>
+    public class ContractTermService : IContractTermService
     {
         readonly IUnitOfWork<ContractTerm> contractTermUnit;
 
@@ -65,8 +65,8 @@
         public async Task<List<ContractTermDTO>> GetAllAsync()
         {
             Mapper.CreateMap<ContractTerm, ContractTermDTO>();
-            return await Mapper.Map<Task<List<ContractTerm>>, Task<List<ContractTermDTO>>>
-                (contractTermUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<ContractTerm>, List<ContractTermDTO>>
+                (await contractTermUnit.Repository.GetAllAsync());
         }
 
         public ContractTermDTO GetById(int? id)
@@ -82,14 +82,14 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<ContractTerm, ContractTermDTO>();
-            return await Mapper.Map<Task<ContractTerm>, Task<ContractTermDTO>>(contractTermUnit
+            return Mapper.Map<ContractTerm, ContractTermDTO>(await contractTermUnit
                 .Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<ContractTermDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<ContractTerm, ContractTermDTO>();
-            return await Mapper.Map<Task<List<ContractTerm>>, Task<List<ContractTermDTO>>>(
+            return Mapper.Map<List<ContractTerm>, List<ContractTermDTO>>(await
                 contractTermUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
 
         }

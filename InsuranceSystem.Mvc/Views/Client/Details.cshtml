@@ -1,0 +1,122 @@
+﻿@model InsuranceSystem.MVC.Models.Catalogs.ClientModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ClientModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsGroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsGroup)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.ParentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParentId)
+        </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EDRPOU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EDRPOU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ITN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ITN)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.FactAdressId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FactAdressId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LegalAdressId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LegalAdressId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BancAccountId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BancAccountId)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

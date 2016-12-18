@@ -63,14 +63,14 @@
         public async Task<List<BankAccountDTO>> GetAllAsync()
         {
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<List<BankAccount>>, Task<List<BankAccountDTO>>>(
+            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetAllAsync());
         }
 
         public async Task<List<BankAccountDTO>> GetByAccountNumberAsync(string number)
         {
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<List<BankAccount>>, Task<List<BankAccountDTO>>>(
+            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.AccountNumber.Trim() == number));
         }
 
@@ -78,7 +78,7 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<List<BankAccount>>, Task<List<BankAccountDTO>>>(
+            return Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await 
                 bankAccountUnit.Repository.GetManyAsync(p => p.BankId == (int)id));
         }
 
@@ -86,7 +86,7 @@
         {
             CheckForNull(date);
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<List<BankAccount>>, Task<List<BankAccountDTO>>>(
+            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.CloseDate == date));
         }
 
@@ -94,7 +94,7 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<List<BankAccount>>, Task<List<BankAccountDTO>>>(
+            return Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.CurrencyId == (int)id));
         }
 
@@ -110,7 +110,7 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<BankAccount>, Task<BankAccountDTO>>(
+            return  Mapper.Map<BankAccount, BankAccountDTO>(await
                 bankAccountUnit.Repository.GetAsync(p => p.Id == id));
 
         }
@@ -119,7 +119,7 @@
         {
             CheckForNull(date);
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<List<BankAccount>>, Task<List<BankAccountDTO>>>(
+            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.OpenDate == date));
 
         }
@@ -176,7 +176,7 @@
         public async Task<List<BankAccountDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return await Mapper.Map<Task<List<BankAccount>>, Task<List<BankAccountDTO>>>(bankAccountUnit
+            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await bankAccountUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
     }

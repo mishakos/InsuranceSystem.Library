@@ -4,7 +4,7 @@ namespace InsuranceSystem.BLL.Interfaces.Catalogs
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IBankService
+    public interface IBankService : IService<BankDTO>
     {
         Task<List<BankDTO>> GetByMFOAsync(string mfo);
         Task<List<BankDTO>> GetByFullNameAsync(string fullName);

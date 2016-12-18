@@ -72,7 +72,7 @@
         public async Task<List<BrandDTO>> GetAllAsync()
         {
             Mapper.CreateMap<Brand, BrandDTO>();
-            return await Mapper.Map<Task<List<Brand>>, Task<List<BrandDTO>>>(brandUnit
+            return Mapper.Map<List<Brand>, List<BrandDTO>>(await brandUnit
                 .Repository.GetAllAsync());
         }
 
@@ -87,14 +87,14 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<Brand, BrandDTO>();
-            return await Mapper.Map<Task<Brand>, Task<BrandDTO>>(brandUnit
+            return  Mapper.Map<Brand, BrandDTO>(await brandUnit
                 .Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<BrandDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<Brand, BrandDTO>();
-            return await Mapper.Map<Task<List<Brand>>, Task<List<BrandDTO>>>(brandUnit
+            return  Mapper.Map<List<Brand>, List<BrandDTO>>(await brandUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
@@ -102,7 +102,10 @@
         {
             CheckForNull(entity);
             Mapper.CreateMap<BrandDTO, Brand>();
-            brandUnit.Repository.Insert(Mapper.Map<BrandDTO, Brand>(entity));
+            var model = Mapper.Map<BrandDTO, Brand>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            brandUnit.Repository.Insert(model);
             return brandUnit.Commit();
         }
 
@@ -110,7 +113,10 @@
         {
             CheckForNull(entity);
             Mapper.CreateMap<BrandDTO, Brand>();
-            brandUnit.Repository.Insert(Mapper.Map<BrandDTO, Brand>(entity));
+            var model = Mapper.Map<BrandDTO, Brand>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            brandUnit.Repository.Insert(model);
             return await brandUnit.CommitAsync();
         }
 
