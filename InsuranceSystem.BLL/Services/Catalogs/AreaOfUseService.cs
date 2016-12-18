@@ -70,7 +70,7 @@
         public async Task<List<AreaOfUseDTO>> GetAllAsync()
         {
             Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<List<AreaOfUse>>,Task<List<AreaOfUseDTO>>>(
+            return Mapper.Map<List<AreaOfUse>,List<AreaOfUseDTO>>(await
                 areaOfUseUnit.Repository.GetAllAsync());
         }
 
@@ -87,7 +87,7 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<AreaOfUse>, Task<AreaOfUseDTO>>(
+            return  Mapper.Map<AreaOfUse, AreaOfUseDTO>(await
                 areaOfUseUnit.Repository.GetAsync(x => x.Id == id));
         }
 
@@ -143,14 +143,14 @@
         public async Task<List<AreaOfUseDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<List<AreaOfUse>>, Task<List<AreaOfUseDTO>>>(areaOfUseUnit
+            return Mapper.Map<List<AreaOfUse>, List<AreaOfUseDTO>>(await areaOfUseUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public async Task<List<AreaOfUseDTO>> GetByParentAsync(int? id)
         {
             Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<List<AreaOfUse>>, Task<List<AreaOfUseDTO>>>(areaOfUseUnit
+            return Mapper.Map<List<AreaOfUse>, List<AreaOfUseDTO>>(await areaOfUseUnit
                 .Repository.GetManyAsync(p => p.ParentId == id));
         }
     }
