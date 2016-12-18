@@ -28,75 +28,96 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         }
 
         // GET: BankAccount/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            return View(model);
         }
 
         // GET: BankAccount/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new BankAccountModel();
+            return View(model);
         }
 
         // POST: BankAccount/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(BankAccountModel model)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var bankAccountDto = Mapper.Map<BankAccountModel, BankAccountDTO>(model);
+                    await _service.InsertAsync(bankAccountDto);
+                    return RedirectToAction("Index");
+                }
+                return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
             }
         }
 
         // GET: BankAccount/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            return View(model);
         }
 
         // POST: BankAccount/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, BankAccountModel model)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var bankAccountDto = Mapper.Map<BankAccountModel, BankAccountDTO>(model);
+                    bankAccountDto.Id = id;
+                    await _service.UpdateAsync(bankAccountDto);
+                    return RedirectToAction("Index");
+                }
+                return View(model);
+                
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
             }
         }
 
         // GET: BankAccount/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            return View(model);
         }
 
         // POST: BankAccount/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, BankAccountModel model)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                await _service.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
             }
+        }
+        private new void Dispose()
+        {
+            _service.Dispose();
+            base.Dispose();
         }
     }
 }
