@@ -239,11 +239,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Catalogs\AreaOfUseController.cs" />
+    <Compile Include="Controllers\Catalogs\BankAccountController.cs" />
     <Compile Include="Controllers\Catalogs\BankController.cs" />
     <Compile Include="Controllers\Catalogs\BlankTypeController.cs" />
     <Compile Include="Controllers\Catalogs\BlankController.cs" />
     <Compile Include="Controllers\Catalogs\BrandController.cs" />
     <Compile Include="Controllers\Catalogs\ClientController.cs" />
+    <Compile Include="Controllers\Catalogs\ContractTermController.cs" />
     <Compile Include="Controllers\Documents\PostBlankController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -390,10 +393,25 @@
     <Content Include="Views\Brand\Create.cshtml" />
     <Content Include="Views\Brand\Edit.cshtml" />
     <Content Include="Views\Brand\Delete.cshtml" />
+    <Content Include="Views\Client\Delete.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Client\Details.cshtml" />
+    <Content Include="Views\Client\Create.cshtml" />
+    <Content Include="Views\Client\Edit.cshtml" />
+    <Content Include="Views\ContractTerm\Index.cshtml" />
+    <Content Include="Views\ContractTerm\Details.cshtml" />
+    <Content Include="Views\ContractTerm\Create.cshtml" />
+    <Content Include="Views\ContractTerm\Edit.cshtml" />
+    <Content Include="Views\ContractTerm\Delete.cshtml" />
+    <Content Include="Views\AreaOfUse\Index.cshtml" />
+    <Content Include="Views\AreaOfUse\Details.cshtml" />
+    <Content Include="Views\AreaOfUse\Create.cshtml" />
+    <Content Include="Views\AreaOfUse\Edit.cshtml" />
+    <Content Include="Views\AreaOfUse\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Client\" />
+    <Folder Include="Views\BankAccount\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

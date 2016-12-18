@@ -63,11 +63,14 @@ namespace InsuranceSystem.Mvc.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IAreaOfUseService>().To<AreaOfUseService>();
+            kernel.Bind<IBankAccountService>().To<BankAccountService>();
+            kernel.Bind<IBankService>().To<BankService>();
             kernel.Bind<IBrandService>().To<BrandService>();
             kernel.Bind<IBlankService>().To<BlankService>();
             kernel.Bind<IBlankTypeService>().To<BlankTypeService>();
-            kernel.Bind<IBankService>().To<BankService>();
             kernel.Bind<IClientService>().To<ClientService>();
+            kernel.Bind<IContractTermService>().To<ContractTermService>();
         }        
     }
 }

@@ -16,7 +16,7 @@
     /// Areas of use - Catalog of Areas of use vehicles.
     /// used in calculation rate of MTPL Policy
     /// </summary>
-    public class AreaOfUseService : IAreaOfUseService, IService<AreaOfUseDTO>
+    public class AreaOfUseService : IAreaOfUseService
     {
         /// <summary>
         /// Connection to data layer by unit of work.

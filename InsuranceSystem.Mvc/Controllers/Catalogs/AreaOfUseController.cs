@@ -11,44 +11,46 @@ using System.Web.Mvc;
 
 namespace InsuranceSystem.Mvc.Controllers.Catalogs
 {
-    public class ClientController : Controller
+    public class AreaOfUseController : Controller
     {
-        private IClientService _service;
-        public ClientController(IClientService service)
+        private IAreaOfUseService _service;
+
+        public AreaOfUseController(IAreaOfUseService service)
         {
             _service = service;
         }
-        // GET: Client
+
+        // GET: AreaOfUse
         public async Task<ActionResult> Index()
         {
-            var clients = Mapper.Map<List<ClientDTO>, List<ClientModel>>(await _service.GetAllAsync());
-            return View(clients);
+            var model = Mapper.Map<List<AreaOfUseDTO>, List<AreaOfUseModel>>(await _service.GetAllAsync());
+            return View(model);
         }
 
-        // GET: Client/Details/5
+        // GET: AreaOfUse/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var model = Mapper.Map<ClientDTO, ClientModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<AreaOfUseDTO, AreaOfUseModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // GET: Client/Create
+        // GET: AreaOfUse/Create
         public ActionResult Create()
         {
-            var model = new ClientModel();
+            var model = new AreaOfUseModel();
             return View(model);
         }
 
-        // POST: Client/Create
+        // POST: AreaOfUse/Create
         [HttpPost]
-        public async Task<ActionResult> Create(ClientModel model)
+        public async Task<ActionResult> Create(AreaOfUseModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var clientDto = Mapper.Map<ClientModel, ClientDTO>(model);
-                    await _service.InsertAsync(clientDto);
+                    var areaOfUseDto = Mapper.Map<AreaOfUseModel, AreaOfUseDTO>(model);
+                    await _service.InsertAsync(areaOfUseDto);
                     return RedirectToAction("Index");
                 }
                 return View(model);
@@ -60,37 +62,27 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             }
         }
 
-        // GET: Client/Edit/5
+        // GET: AreaOfUse/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var model = Mapper.Map<ClientDTO, ClientModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<AreaOfUseDTO, AreaOfUseModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // POST: Client/Edit/5
+        // POST: AreaOfUse/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, ClientModel model)
+        public async Task<ActionResult> Edit(int id, AreaOfUseModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var clientDto = await _service.GetByIdAsync(id);
-                    clientDto.BancAccountId = model.BancAccountId;
-                    clientDto.EDRPOU = model.EDRPOU;
-                    clientDto.FactAddressId = model.FactAdressId;
-                    clientDto.FullName = model.FullName;
-                    clientDto.IsDelete = model.IsDelete;
-                    clientDto.IsGroup = model.IsGroup;
-                    clientDto.ITN = model.ITN;
-                    clientDto.LegalAddressId = model.LegalAdressId;
-                    clientDto.Name = model.Name;
-                    clientDto.ParentId = model.ParentId;
-                    await _service.UpdateAsync(clientDto);
+                    var areaOfUseDto = Mapper.Map<AreaOfUseModel, AreaOfUseDTO>(model);
+                    areaOfUseDto.Id = id;
+                    await _service.UpdateAsync(areaOfUseDto);
                     return RedirectToAction("Index");
                 }
-                else
-                    return View(model);                
+                return View(model);
             }
             catch (Exception ex)
             {
@@ -99,26 +91,27 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             }
         }
 
-        // GET: Client/Delete/5
+        // GET: AreaOfUse/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var model = Mapper.Map<ClientDTO, ClientModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<AreaOfUseDTO, AreaOfUseModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // POST: Client/Delete/5
+        // POST: AreaOfUse/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, ClientModel model)
+        public async Task<ActionResult> Delete(int id, AreaOfUseModel model)
         {
             try
             {
                 await _service.DeleteAsync(id);
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return View(model);
+                return View();
             }
         }
         private new void Dispose()
@@ -126,7 +119,5 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             _service.Dispose();
             base.Dispose();
         }
-
     }
-
 }

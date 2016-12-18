@@ -12,11 +12,15 @@ namespace InsuranceSystem.Mvc.App_Start
     {
         public static void RegisterMapping()
         {
+            CreateMap<AreaOfUseDTO, AreaOfUseModel>();
+            CreateMap<BankAccountDTO, BankAccountModel>();
+            CreateMap<BankDTO, BankModel>();
             CreateMap<BlankDTO, BlankModel>();
             CreateMap<BlankTypeDTO, BlankTypeModel>();
             CreateMap<BrandDTO, BrandModel>();
             CreateMap<BonusMalusDTO, BonusMalusModel>();
-            //CreateMap<BlankDTO, BlankModel>();
+            CreateMap<ClientDTO, ClientModel>();
+            CreateMap<ContractTermDTO, ContractTermModel>();
 
         }
 
