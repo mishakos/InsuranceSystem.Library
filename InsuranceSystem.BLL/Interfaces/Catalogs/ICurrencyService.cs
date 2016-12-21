@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface ICurrencyService
+    public interface ICurrencyService : IService<CurrencyDTO>
     {
         Task<CurrencyDTO> GetByCodeAsync(string code);
     }

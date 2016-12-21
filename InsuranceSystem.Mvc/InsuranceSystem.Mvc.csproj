@@ -244,9 +244,11 @@
     <Compile Include="Controllers\Catalogs\BankController.cs" />
     <Compile Include="Controllers\Catalogs\BlankTypeController.cs" />
     <Compile Include="Controllers\Catalogs\BlankController.cs" />
+    <Compile Include="Controllers\Catalogs\BonusMalusController.cs" />
     <Compile Include="Controllers\Catalogs\BrandController.cs" />
     <Compile Include="Controllers\Catalogs\ClientController.cs" />
     <Compile Include="Controllers\Catalogs\ContractTermController.cs" />
+    <Compile Include="Controllers\Catalogs\CurrencyController.cs" />
     <Compile Include="Controllers\Documents\PostBlankController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -413,6 +415,16 @@
     <Content Include="Views\BankAccount\Create.cshtml" />
     <Content Include="Views\BankAccount\Edit.cshtml" />
     <Content Include="Views\BankAccount\Delete.cshtml" />
+    <Content Include="Views\Currency\Index.cshtml" />
+    <Content Include="Views\Currency\Details.cshtml" />
+    <Content Include="Views\Currency\Create.cshtml" />
+    <Content Include="Views\Currency\Delete.cshtml" />
+    <Content Include="Views\Currency\Edit.cshtml" />
+    <Content Include="Views\BonusMalus\Index.cshtml" />
+    <Content Include="Views\BonusMalus\Delete.cshtml" />
+    <Content Include="Views\BonusMalus\Edit.cshtml" />
+    <Content Include="Views\BonusMalus\Create.cshtml" />
+    <Content Include="Views\BonusMalus\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
