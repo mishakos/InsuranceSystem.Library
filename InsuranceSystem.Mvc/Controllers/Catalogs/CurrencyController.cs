@@ -11,48 +11,49 @@ using System.Web.Mvc;
 
 namespace InsuranceSystem.Mvc.Controllers.Catalogs
 {
-    public class BankAccountController : Controller
+    public class CurrencyController : Controller
     {
-        private IBankAccountService _service;
+        private ICurrencyService _service;
 
-        public BankAccountController(IBankAccountService service)
+        public CurrencyController(ICurrencyService service)
         {
             _service = service;
         }
 
-        // GET: BankAccount
+        // GET: Currency
         public async Task<ActionResult> Index()
         {
-            var model = Mapper.Map<List<BankAccountDTO>, List<BankAccountModel>>(await _service.GetAllAsync());
+            var model = Mapper.Map<List<CurrencyDTO>, List<CurrencyModel>>(await _service.GetAllAsync());
             return View(model);
         }
 
-        // GET: BankAccount/Details/5
+        // GET: Currency/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<CurrencyDTO, CurrencyModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // GET: BankAccount/Create
+        // GET: Currency/Create
         public ActionResult Create()
         {
-            var model = new BankAccountModel();
+            var model = new CurrencyModel();
             return View(model);
         }
 
-        // POST: BankAccount/Create
+        // POST: Currency/Create
         [HttpPost]
-        public async Task<ActionResult> Create(BankAccountModel model)
+        public async Task<ActionResult> Create(CurrencyModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var bankAccountDto = Mapper.Map<BankAccountModel, BankAccountDTO>(model);
-                    await _service.InsertAsync(bankAccountDto);
+                    var currencyDto = Mapper.Map<CurrencyModel, CurrencyDTO>(model);
+                    await _service.InsertAsync(currencyDto);
                     return RedirectToAction("Index");
                 }
+
                 return View(model);
             }
             catch (Exception ex)
@@ -62,28 +63,28 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             }
         }
 
-        // GET: BankAccount/Edit/5
+        // GET: Currency/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<CurrencyDTO, CurrencyDTO>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // POST: BankAccount/Edit/5
+        // POST: Currency/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, BankAccountModel model)
+        public async Task<ActionResult> Edit(int id, CurrencyModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var bankAccountDto = Mapper.Map<BankAccountModel, BankAccountDTO>(model);
-                    bankAccountDto.Id = id;
-                    await _service.UpdateAsync(bankAccountDto);
+                    var currencyDto = Mapper.Map<CurrencyModel, CurrencyDTO>(model);
+                    currencyDto.Id = id;
+                    await _service.UpdateAsync(currencyDto);
                     return RedirectToAction("Index");
                 }
+
                 return View(model);
-                
             }
             catch (Exception ex)
             {
@@ -92,16 +93,16 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             }
         }
 
-        // GET: BankAccount/Delete/5
+        // GET: Currency/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<CurrencyDTO, CurrencyModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // POST: BankAccount/Delete/5
+        // POST: Currency/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, BankAccountModel model)
+        public async Task<ActionResult> Delete(int id, CurrencyModel model)
         {
             try
             {
@@ -113,11 +114,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
                 ModelState.AddModelError("", ex.Message);
                 return View(model);
             }
-        }
-        private new void Dispose()
-        {
-            _service.Dispose();
-            base.Dispose();
         }
     }
 }

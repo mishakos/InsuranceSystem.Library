@@ -71,6 +71,7 @@ namespace InsuranceSystem.Mvc.App_Start
             kernel.Bind<IBlankTypeService>().To<BlankTypeService>();
             kernel.Bind<IClientService>().To<ClientService>();
             kernel.Bind<IContractTermService>().To<ContractTermService>();
+            kernel.Bind<ICurrencyService>().To<CurrencyService>();
         }        
     }
 }

@@ -21,7 +21,7 @@ namespace InsuranceSystem.Mvc.App_Start
             CreateMap<BonusMalusDTO, BonusMalusModel>();
             CreateMap<ClientDTO, ClientModel>();
             CreateMap<ContractTermDTO, ContractTermModel>();
-
+            CreateMap<CurrencyDTO, CurrencyModel>();
         }
 
         private static void CreateMap<T, U>() where T : CatalogDTO where U : CatalogModel

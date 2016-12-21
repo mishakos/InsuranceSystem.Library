@@ -63,8 +63,8 @@
         public async Task<List<BonusMalusDTO>> GetAllAsync()
         {
             Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
-            return await Mapper.Map<Task<List<BonusMalus>>, Task<List<BonusMalusDTO>>>
-                (bonusMalusUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<BonusMalus>, List<BonusMalusDTO>>
+                (await bonusMalusUnit.Repository.GetAllAsync());
         }
 
         public BonusMalusDTO GetById(int? id)
@@ -79,15 +79,15 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
-            return await Mapper.Map<Task<BonusMalus>, Task<BonusMalusDTO>>
-                (bonusMalusUnit.Repository.GetAsync(p => p.Id == id));
+            return Mapper.Map<BonusMalus, BonusMalusDTO>
+                (await bonusMalusUnit.Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<BonusMalusDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
-            return await Mapper.Map<Task<List<BonusMalus>>, Task<List<BonusMalusDTO>>>
-                (bonusMalusUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+            return Mapper.Map<List<BonusMalus>, List<BonusMalusDTO>>
+                (await bonusMalusUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(BonusMalusDTO entity)

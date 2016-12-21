@@ -11,7 +11,7 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    public class CurrencyService : ICurrencyService, IService<CurrencyDTO>
+    public class CurrencyService : ICurrencyService
     {
         readonly IUnitOfWork<Currency> currencyUnit;
 
@@ -65,15 +65,14 @@
         public async Task<List<CurrencyDTO>> GetAllAsync()
         {
             Mapper.CreateMap<Currency, CurrencyDTO>();
-            return await Mapper.Map<Task<List<Currency>>, Task<List<CurrencyDTO>>>(
-                currencyUnit
-                .Repository.GetAllAsync());
+            return Mapper.Map<List<Currency>, List<CurrencyDTO>>(
+                await currencyUnit.Repository.GetAllAsync());
         }
 
         public async Task<CurrencyDTO> GetByCodeAsync(string code)
         {
             Mapper.CreateMap<Currency, CurrencyDTO>();
-            return await Mapper.Map<Task<Currency>, Task<CurrencyDTO>>(currencyUnit.Repository
+            return Mapper.Map<Currency, CurrencyDTO>(await currencyUnit.Repository
                 .GetAsync(p => p.Code.ToUpper().Contains(code.ToUpper())));
         }
 
@@ -87,14 +86,14 @@
         public async Task<CurrencyDTO> GetByIdAsync(int? id)
         {
             Mapper.CreateMap<Currency, CurrencyDTO>();
-            return await Mapper.Map<Task<Currency>, Task<CurrencyDTO>>(currencyUnit.Repository
+            return Mapper.Map<Currency, CurrencyDTO>(await currencyUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
         public async Task<List<CurrencyDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<Currency, CurrencyDTO>();
-            return await Mapper.Map<Task<List<Currency>>, Task<List<CurrencyDTO>>>(
+            return Mapper.Map<List<Currency>, List<CurrencyDTO>>(await 
                 currencyUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 

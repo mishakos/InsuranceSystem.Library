@@ -11,46 +11,44 @@ using System.Web.Mvc;
 
 namespace InsuranceSystem.Mvc.Controllers.Catalogs
 {
-    public class BankAccountController : Controller
+    public class BonusMalusController : Controller
     {
-        private IBankAccountService _service;
-
-        public BankAccountController(IBankAccountService service)
+        private IBonusMalusService _service;
+        public BonusMalusController(IBonusMalusService service)
         {
             _service = service;
         }
-
-        // GET: BankAccount
+        // GET: BonusMalus
         public async Task<ActionResult> Index()
         {
-            var model = Mapper.Map<List<BankAccountDTO>, List<BankAccountModel>>(await _service.GetAllAsync());
+            var model = Mapper.Map<List<BonusMalusDTO>, List<BonusMalusModel>>(await _service.GetAllAsync());
             return View(model);
         }
 
-        // GET: BankAccount/Details/5
+        // GET: BonusMalus/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<BonusMalusDTO, BonusMalusModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // GET: BankAccount/Create
+        // GET: BonusMalus/Create
         public ActionResult Create()
         {
-            var model = new BankAccountModel();
+            var model = new BonusMalusModel();
             return View(model);
         }
 
-        // POST: BankAccount/Create
+        // POST: BonusMalus/Create
         [HttpPost]
-        public async Task<ActionResult> Create(BankAccountModel model)
+        public async Task<ActionResult> Create(BonusMalusModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var bankAccountDto = Mapper.Map<BankAccountModel, BankAccountDTO>(model);
-                    await _service.InsertAsync(bankAccountDto);
+                    var bonusMalusDto = Mapper.Map<BonusMalusModel, BonusMalusDTO>(model);
+                    await _service.InsertAsync(bonusMalusDto);
                     return RedirectToAction("Index");
                 }
                 return View(model);
@@ -62,28 +60,27 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             }
         }
 
-        // GET: BankAccount/Edit/5
+        // GET: BonusMalus/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<BonusMalusDTO, BonusMalusModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // POST: BankAccount/Edit/5
+        // POST: BonusMalus/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, BankAccountModel model)
+        public async Task<ActionResult> Edit(int id, BonusMalusModel model)
         {
             try
             {
-                if (ModelState.IsValid)
+                if(ModelState.IsValid)
                 {
-                    var bankAccountDto = Mapper.Map<BankAccountModel, BankAccountDTO>(model);
-                    bankAccountDto.Id = id;
-                    await _service.UpdateAsync(bankAccountDto);
+                    var bonusMalusDto = Mapper.Map<BonusMalusModel, BonusMalusDTO>(model);
+                    bonusMalusDto.Id = id;
+                    await _service.UpdateAsync(bonusMalusDto);
                     return RedirectToAction("Index");
                 }
                 return View(model);
-                
             }
             catch (Exception ex)
             {
@@ -92,16 +89,16 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
             }
         }
 
-        // GET: BankAccount/Delete/5
+        // GET: BonusMalus/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var model = Mapper.Map<BankAccountDTO, BankAccountModel>(await _service.GetByIdAsync(id));
+            var model = Mapper.Map<BonusMalusDTO, BonusMalusModel>(await _service.GetByIdAsync(id));
             return View(model);
         }
 
-        // POST: BankAccount/Delete/5
+        // POST: BonusMalus/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, BankAccountModel model)
+        public async Task<ActionResult> Delete(int id, BonusMalusModel model)
         {
             try
             {
@@ -113,11 +110,6 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
                 ModelState.AddModelError("", ex.Message);
                 return View(model);
             }
-        }
-        private new void Dispose()
-        {
-            _service.Dispose();
-            base.Dispose();
         }
     }
 }
