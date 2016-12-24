@@ -64,7 +64,7 @@
 
         public async Task<List<InsuranceTypeDTO>> GetAllAsync()
         {
-            return await Mapper.Map<Task<List<InsuranceTypeDTO>>>(itUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<InsuranceTypeDTO>>(await itUnit.Repository.GetAllAsync());
         }
 
         public InsuranceTypeDTO GetById(int? id)
@@ -81,7 +81,7 @@
 
         public async Task<List<InsuranceTypeDTO>> GetByNameAsync(string name)
         {
-            return await Mapper.Map<Task<List<InsuranceTypeDTO>>>(itUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
+            return Mapper.Map<List<InsuranceTypeDTO>>(await itUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
             .Contains(name.ToUpper())));
         }
 

@@ -65,7 +65,7 @@
         public async Task<List<DocumentCategoryDTO>> GetAllAsync()
         {
             Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
-            return await Mapper.Map<Task<List<DocumentCategory>>, Task<List<DocumentCategoryDTO>>>(dcUnit
+            return  Mapper.Map<List<DocumentCategory>, List<DocumentCategoryDTO>>(await dcUnit
                 .Repository.GetAllAsync());
         }
 
@@ -82,14 +82,14 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
-            return await Mapper.Map<Task<DocumentCategory>, Task<DocumentCategoryDTO>>(dcUnit
+            return  Mapper.Map<DocumentCategory, DocumentCategoryDTO>(await dcUnit
                 .Repository.GetAsync(p => p.Id == (int)id));
         }
 
         public async Task<List<DocumentCategoryDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
-            return await Mapper.Map<Task<List<DocumentCategory>>, Task<List<DocumentCategoryDTO>>>(dcUnit
+            return  Mapper.Map<List<DocumentCategory>, List<DocumentCategoryDTO>>(await dcUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 

@@ -66,13 +66,13 @@
         public async Task<List<FirmDTO>> GetAllAsync()
         {
             Mapper.CreateMap<Firm, FirmDTO>();
-            return await Mapper.Map<Task<List<Firm>>, Task<List<FirmDTO>>>(firmUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<Firm>, List<FirmDTO>>(await firmUnit.Repository.GetAllAsync());
         }
 
         public async Task<List<FirmDTO>> GetByEDRPOUAsync(string edrpou)
         {
             Mapper.CreateMap<Firm, FirmDTO>();
-            return await Mapper.Map<Task<List<Firm>>, Task<List<FirmDTO>>>(firmUnit.Repository
+            return Mapper.Map<List<Firm>, List<FirmDTO>>(await firmUnit.Repository
                 .GetManyAsync(p => p.EDRPOU.ToUpper().Contains(edrpou.ToUpper())));
         }
 
@@ -87,7 +87,7 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<Firm, FirmDTO>();
-            return await Mapper.Map<Task<Firm>, Task<FirmDTO>>(firmUnit.Repository
+            return Mapper.Map<Firm, FirmDTO>(await firmUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
@@ -95,7 +95,7 @@
         {
             CheckForNull(name);
             Mapper.CreateMap<Firm, FirmDTO>();
-            return await Mapper.Map<Task<List<Firm>>, Task<List<FirmDTO>>>(firmUnit.Repository
+            return Mapper.Map<List<Firm>, List<FirmDTO>>(await firmUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 

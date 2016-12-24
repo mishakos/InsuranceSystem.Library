@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IDocumentCategoryService
+    public interface IDocumentCategoryService : IService<DocumentCategoryDTO>
     {
     }
 }

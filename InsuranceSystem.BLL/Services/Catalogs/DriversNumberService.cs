@@ -68,7 +68,7 @@
         public async Task<List<DriversNumberDTO>> GetAllAsync()
         {
             Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
-            return await Mapper.Map<Task<List<DriversNumber>>, Task<List<DriversNumberDTO>>>(dnUnit
+            return Mapper.Map<List<DriversNumber>, List<DriversNumberDTO>>(await dnUnit
                 .Repository.GetAllAsync());
         }
 
@@ -83,14 +83,14 @@
         {
             CheckForNull(id);
             Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
-            return await Mapper.Map<Task<DriversNumber>, Task<DriversNumberDTO>>(dnUnit.Repository
+            return Mapper.Map<DriversNumber, DriversNumberDTO>(await dnUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
         public async Task<List<DriversNumberDTO>> GetByNameAsync(string name)
         {
             Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
-            return await Mapper.Map<Task<List<DriversNumber>>, Task<List<DriversNumberDTO>>>(dnUnit.Repository
+            return Mapper.Map<List<DriversNumber>, List<DriversNumberDTO>>(await dnUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 

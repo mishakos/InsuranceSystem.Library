@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    interface IDepartmentService
+    public interface IDepartmentService : IService<DepartmentDTO>
     {
         Task<List<DepartmentDTO>> GetByFirmIdAsync(int? id);
     }
