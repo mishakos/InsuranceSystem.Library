@@ -11,13 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class BonusMalusService : IBonusMalusService, IService<BonusMalusDTO>
+    public class BonusMalusService : IBonusMalusService
     {
         readonly IUnitOfWork<BonusMalus> bonusMalusUnit;
+        readonly AutoMapperConfig autoMapperConfig;
         public BonusMalusService()
         {
             bonusMalusUnit = new BonusMalusUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(BonusMalusDTO entity)

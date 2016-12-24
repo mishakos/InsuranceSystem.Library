@@ -11,14 +11,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class BrandService : IBrandService, IService<BrandDTO>
+    public class BrandService : IBrandService
     {
         readonly IUnitOfWork<Brand> brandUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public BrandService()
         {
             brandUnit = new BrandUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(BrandDTO entity)

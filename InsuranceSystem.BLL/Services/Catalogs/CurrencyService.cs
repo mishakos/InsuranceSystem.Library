@@ -11,13 +11,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
+
     public class CurrencyService : ICurrencyService
     {
         readonly IUnitOfWork<Currency> currencyUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public CurrencyService()
         {
             currencyUnit = new CurrencyUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(CurrencyDTO entity)

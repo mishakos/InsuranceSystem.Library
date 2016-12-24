@@ -11,13 +11,16 @@
     using Interfaces;
     using System.Threading.Tasks;
     using UnitOfWork;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class TerritoryRegistrationService : ITerritoryRegistrationService, IService<TerritoryRegistrationDTO>
+    public class TerritoryRegistrationService : ITerritoryRegistrationService
     {
         readonly IUnitOfWork<TerritoryRegistration> trUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public TerritoryRegistrationService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             trUnit = new TerritoryRegistrationUnit();
         }
 

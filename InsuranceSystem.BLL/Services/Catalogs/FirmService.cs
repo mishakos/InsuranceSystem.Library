@@ -12,14 +12,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class FirmService : IFirmService, IService<FirmDTO>
+    public class FirmService : IFirmService
     {
         readonly IUnitOfWork<Firm> firmUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public FirmService()
         {
             firmUnit = new FirmUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(FirmDTO entity)

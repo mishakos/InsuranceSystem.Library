@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
 
-    interface IPersonService
+    public interface IPersonService
     {
     }
 }

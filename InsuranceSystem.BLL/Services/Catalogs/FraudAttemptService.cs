@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class FraudAttemptService : IFraudAttemptService, IService<FraudAttemptDTO>
+    public class FraudAttemptService : IFraudAttemptService
     {
         readonly IUnitOfWork<FraudAttempt> faUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public FraudAttemptService()
         {
-            Mapper.CreateMap<FraudAttempt, FraudAttemptDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             faUnit = new FraudAttemptUnit();
         }
 

@@ -3,7 +3,7 @@
     using DTO.Documents;
     using System.Collections.Generic;
 
-    interface IMoveBlankService
+    public interface IMoveBlankService
     {
         void MakeMoveBlank(MoveBlankDTO moveBlankDTO);
         MoveBlankDTO GetMoveBlank(int? id);

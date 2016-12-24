@@ -14,7 +14,7 @@
     using System.Threading.Tasks;
     using UnitOfWork;
 
-    public class MoveBlankService : IMoveBlankService, IService<MoveBlankDTO>
+    public class MoveBlankService : IMoveBlankService
     {
         readonly IUnitOfWork<MoveBlank> moveBlankUnit;
 

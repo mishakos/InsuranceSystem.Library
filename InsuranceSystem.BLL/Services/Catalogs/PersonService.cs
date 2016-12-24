@@ -13,12 +13,14 @@
     using System.Threading.Tasks;
     using UnitOfWork;
 
-    public class PersonService : IPersonService, IService<PersonDTO>
+    public class PersonService : IPersonService
     {
         readonly IUnitOfWork<Person> personUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public PersonService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             personUnit = new PersonUnit();
         }
 

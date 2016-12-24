@@ -12,13 +12,16 @@
     using UnitOfWork.Catalogs;
 
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class BankService : IBankService, IService<BankDTO>
+    public class BankService : IBankService
     {
+        readonly AutoMapperConfig autoMapperConfig;
         readonly IUnitOfWork<Bank> bankUnit;
         public BankService()
         {
             bankUnit = new BankUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(BankDTO entity)

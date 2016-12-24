@@ -11,17 +11,21 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
+
     /// <summary>
     /// Service to manage address catalog
     /// </summary>
-    public class AddressService : IAddressService, IService<AddressDTO>
+    public class AddressService : IAddressService
     {
+        readonly AutoMapperConfig autoMapperConfig;
         /// <summary>
         /// address unit to connect to data layer
         /// </summary>
         readonly IUnitOfWork<Address> addressUnit;
         public AddressService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             addressUnit = new AddressUnit();
         }
 

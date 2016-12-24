@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class LVRegistrationService : ILocalityVehicleRegistrationService, IService<LocalityVehicleRegistrationDTO>
+    public class LVRegistrationService : ILocalityVehicleRegistrationService
     {
         readonly IUnitOfWork<LocalityVehicleRegistration> lvrUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public LVRegistrationService()
         {
-            Mapper.CreateMap<LocalityVehicleRegistration, LocalityVehicleRegistrationDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             lvrUnit = new LocalityVehicleRegistrationUnit();
         }
 

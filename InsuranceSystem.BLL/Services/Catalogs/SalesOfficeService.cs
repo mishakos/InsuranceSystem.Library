@@ -13,12 +13,14 @@
     using System.Threading.Tasks;
     using UnitOfWork;
 
-    public class SalesOfficeService : ISalesOfficeService, IService<SalesOfficeDTO>
+    public class SalesOfficeService : ISalesOfficeService
     {
         readonly IUnitOfWork<SalesOffice> soUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public SalesOfficeService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             soUnit = new SalesOfficeUnit();
         }
 

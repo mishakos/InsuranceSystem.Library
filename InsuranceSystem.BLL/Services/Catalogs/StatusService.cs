@@ -13,12 +13,14 @@
     using UnitOfWork;
     using System.Threading.Tasks;
 
-    public class StatusService : IStatusService, IService<StatusDTO>
+    public class StatusService : IStatusService
     {
         readonly IUnitOfWork<Status> statusUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public StatusService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             statusUnit = new StatusUnit();
         }
 

@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
 
-    interface ISalesOfficeService
+    public interface ISalesOfficeService
     {
     }
 }

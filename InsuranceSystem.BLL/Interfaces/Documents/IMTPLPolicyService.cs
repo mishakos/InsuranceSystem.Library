@@ -3,7 +3,7 @@
     using DTO.Documents;
     using System.Collections.Generic;
 
-    interface IMTPLPolicyService
+    public interface IMTPLPolicyService
     {
         void MakeMTPLPolicy(MTPLPolicyDTO mtplPolicyDTO);
         MTPLPolicyDTO GetMTPLPolicy(int? id);

@@ -13,12 +13,14 @@
     using UnitOfWork;
     using System.Threading.Tasks;
 
-    public class VehiclesNumberService : IVehiclesNumberService, IService<VehiclesNumberDTO>
+    public class VehiclesNumberService : IVehiclesNumberService
     {
         readonly IUnitOfWork<VehiclesNumber> vnUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public VehiclesNumberService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             vnUnit = new VehiclesNumberUnit();
         }
 
