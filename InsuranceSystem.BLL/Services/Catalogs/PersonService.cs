@@ -26,7 +26,10 @@
 
         public int Delete(PersonDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            personUnit.Repository.Delete(entity.Id);
+            return personUnit.Commit();
         }
 
         public int Delete(int? id)
@@ -39,9 +42,11 @@
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            personUnit.Repository.Delete((int)id);
+            return await personUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -51,47 +56,84 @@
 
         public IEnumerable<PersonDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<Person>, List<PersonDTO>>(personUnit.Repository.GetAll());
         }
 
-        public Task<List<PersonDTO>> GetAllAsync()
+        public async Task<List<PersonDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<Person>, List<PersonDTO>>(await personUnit.Repository.GetAllAsync());
         }
 
         public PersonDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<Person, PersonDTO>(personUnit.Repository.GetById((int)id));
         }
 
-        public Task<PersonDTO> GetByIdAsync(int? id)
+        public async Task<PersonDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<Person, PersonDTO>(await personUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public Task<List<PersonDTO>> GetByNameAsync(string name)
+        public async Task<List<PersonDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<Person>, List<PersonDTO>>(await personUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(PersonDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<PersonDTO, Person>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            personUnit.Repository.Insert(model);
+            return personUnit.Commit();
         }
 
-        public Task<int> InsertAsync(PersonDTO entity)
+        public async Task<int> InsertAsync(PersonDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<PersonDTO, Person>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            personUnit.Repository.Insert(model);
+            return await personUnit.CommitAsync();
         }
 
         public int Update(PersonDTO entity)
         {
-            throw new NotImplementedException();
+            var model = personUnit.Repository.GetById(entity.Id);
+            MapPerson(entity, model);
+            personUnit.Repository.Update(model);
+            return personUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(PersonDTO entity)
+        private void MapPerson(PersonDTO entity, Person model)
         {
-            throw new NotImplementedException();
+            model.AddressId = entity.AdressId;
+            model.Birthdate = entity.BirthDate;
+            model.CodeDRFO = entity.CodeDRFO;
+            model.DocumentDate = entity.DocumentDate;
+            model.DocumentSeries = entity.DocumentSeries;
+            model.DocumentIssuer = entity.DocumentWhoGive;
+            model.DocumentType = entity.DocumentType;
+            model.DocumentNumber = entity.DocumentNumber;
+            model.EMail = entity.EMail;
+            model.FirstName = entity.FirstName;
+            model.IsDelete = entity.IsDelete;
+            model.IsGroup = entity.IsGroup;
+            model.LastName = entity.LastName;
+            model.MiddleName = entity.MiddleName;
+            model.ModifiedDate = DateTime.Now;
+            model.Name = entity.Name;
+            model.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> UpdateAsync(PersonDTO entity)
+        {
+            var model = await personUnit.Repository.GetAsync(p => p.Id == entity.Id);
+            MapPerson(entity, model);
+            personUnit.Repository.Update(model);
+            return await personUnit.CommitAsync();
         }
     }
 }

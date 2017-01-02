@@ -26,22 +26,32 @@
 
         public int Delete(TerritoryRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            trUnit.Repository.Delete(entity.Id);
+            return trUnit.Commit();
         }
 
         public int Delete(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            trUnit.Repository.Delete((int)id);
+            return trUnit.Commit();
         }
 
-        public Task<int> DeleteAsync(TerritoryRegistrationDTO entity)
+        public async Task<int> DeleteAsync(TerritoryRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            trUnit.Repository.Delete(entity.Id);
+            return await trUnit.CommitAsync();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            trUnit.Repository.Delete((int)id);
+            return await trUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -51,47 +61,74 @@
 
         public IEnumerable<TerritoryRegistrationDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<TerritoryRegistration>, List<TerritoryRegistrationDTO>>(trUnit.Repository.GetAll());
         }
 
-        public Task<List<TerritoryRegistrationDTO>> GetAllAsync()
+        public async Task<List<TerritoryRegistrationDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<TerritoryRegistration>, List<TerritoryRegistrationDTO>>(await trUnit.Repository.GetAllAsync());
         }
 
         public TerritoryRegistrationDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<TerritoryRegistration, TerritoryRegistrationDTO>(
+                trUnit.Repository.GetById((int)id));
         }
 
-        public Task<TerritoryRegistrationDTO> GetByIdAsync(int? id)
+        public async Task<TerritoryRegistrationDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<TerritoryRegistration, TerritoryRegistrationDTO>(
+                await trUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public Task<List<TerritoryRegistrationDTO>> GetByNameAsync(string name)
+        public async Task<List<TerritoryRegistrationDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<TerritoryRegistration>, List<TerritoryRegistrationDTO>>(
+                await trUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(TerritoryRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<TerritoryRegistrationDTO, TerritoryRegistration>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            trUnit.Repository.Insert(model);
+            return trUnit.Commit();
         }
 
-        public Task<int> InsertAsync(TerritoryRegistrationDTO entity)
+        public async Task<int> InsertAsync(TerritoryRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<TerritoryRegistrationDTO, TerritoryRegistration>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            trUnit.Repository.Insert(model);
+            return await trUnit.CommitAsync();
         }
 
         public int Update(TerritoryRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            var model = trUnit.Repository.GetById(entity.Id);
+            model.IsDelete = entity.IsDelete;
+            model.IsGroup = entity.IsGroup;
+            model.ModifiedDate = DateTime.Now;
+            model.Name = entity.Name;
+            model.ParentId = entity.ParentId;
+            trUnit.Repository.Update(model);
+            return trUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(TerritoryRegistrationDTO entity)
+        public async Task<int> UpdateAsync(TerritoryRegistrationDTO entity)
         {
-            throw new NotImplementedException();
+            var model = await trUnit.Repository.GetAsync(p => p.Id == entity.Id);
+            model.IsDelete = entity.IsDelete;
+            model.IsGroup = entity.IsGroup;
+            model.ModifiedDate = DateTime.Now;
+            model.Name = entity.Name;
+            model.ParentId = entity.ParentId;
+            trUnit.Repository.Update(model);
+            return await trUnit.CommitAsync();
         }
     }
 }
