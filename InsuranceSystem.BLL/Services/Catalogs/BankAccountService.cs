@@ -11,12 +11,15 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class BankAccountService : IBankAccountService, IService<BankAccountDTO>
+    public class BankAccountService : IBankAccountService
     {
+        readonly AutoMapperConfig autoMapperConfig;
         readonly IUnitOfWork<BankAccount> bankAccountUnit;
         public BankAccountService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             bankAccountUnit = new BankAccountUnit();
         }
 

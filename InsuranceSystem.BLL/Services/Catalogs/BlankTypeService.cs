@@ -12,13 +12,16 @@ namespace InsuranceSystem.BLL.Services.Catalogs
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class BlankTypeService : IBlankTypeService, IService<BlankTypeDTO>
+    public class BlankTypeService : IBlankTypeService
     {
         readonly IUnitOfWork<BlankType> blankTypeUnit;
+        readonly AutoMapperConfig autoMapperConfig;
         public BlankTypeService()
         {
             blankTypeUnit = new BlankTypeUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(BlankTypeDTO entity)

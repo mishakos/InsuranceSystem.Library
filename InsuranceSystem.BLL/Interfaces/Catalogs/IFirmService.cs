@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IFirmService
+    public interface IFirmService
     {
         Task<List<FirmDTO>> GetByEDRPOUAsync(string edrpou);
     }

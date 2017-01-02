@@ -13,13 +13,14 @@
     using System.Threading.Tasks;
     using UnitOfWork;
 
-    public class ModelService : IModelService, IService<ModelDTO>
+    public class ModelService : IModelService
     {
         readonly IUnitOfWork<Model> mUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public ModelService()
         {
-            Mapper.CreateMap<Model, ModelDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             mUnit = new ModelUnit();
         }
 

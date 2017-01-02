@@ -11,6 +11,7 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
     /// <summary>
     /// Areas of use - Catalog of Areas of use vehicles.
@@ -18,12 +19,14 @@
     /// </summary>
     public class AreaOfUseService : IAreaOfUseService
     {
+        readonly AutoMapperConfig autoMapperConfig;
         /// <summary>
         /// Connection to data layer by unit of work.
         /// </summary>
         readonly IUnitOfWork<AreaOfUse> areaOfUseUnit;
         public AreaOfUseService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             areaOfUseUnit = new AreasOfUseUnit();
         }
 

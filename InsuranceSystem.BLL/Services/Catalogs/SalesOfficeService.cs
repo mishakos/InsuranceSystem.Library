@@ -7,39 +7,50 @@
     using Library.Models.Catalogs;
     using System;
     using System.Collections.Generic;
-    using UnitOfWork.Catalogs;
-    using static Validation.CheckValues;
-    using Interfaces;
     using System.Threading.Tasks;
     using UnitOfWork;
+    using UnitOfWork.Catalogs;
+    using static Validation.CheckValues;
 
-    public class SalesOfficeService : ISalesOfficeService, IService<SalesOfficeDTO>
+    public class SalesOfficeService : ISalesOfficeService
     {
         readonly IUnitOfWork<SalesOffice> soUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public SalesOfficeService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             soUnit = new SalesOfficeUnit();
         }
 
         public int Delete(SalesOfficeDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            soUnit.Repository.Delete(entity.Id);
+            return soUnit.Commit();
         }
 
         public int Delete(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            soUnit.Repository.Delete((int)id);
+            return soUnit.Commit();
         }
 
-        public Task<int> DeleteAsync(SalesOfficeDTO entity)
+        public async Task<int> DeleteAsync(SalesOfficeDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            soUnit.Repository.Delete(entity.Id);
+            return await soUnit.CommitAsync();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            soUnit.Repository.Delete((int)id);
+            return await soUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -49,47 +60,77 @@
 
         public IEnumerable<SalesOfficeDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<SalesOffice>, List<SalesOfficeDTO>>(soUnit.Repository.GetAll());
         }
 
-        public Task<List<SalesOfficeDTO>> GetAllAsync()
+        public async Task<List<SalesOfficeDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<SalesOffice>, List<SalesOfficeDTO>>(await soUnit.Repository.GetAllAsync());
         }
 
         public SalesOfficeDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<SalesOffice, SalesOfficeDTO>(soUnit.Repository.GetById((int)id));
         }
 
-        public Task<SalesOfficeDTO> GetByIdAsync(int? id)
+        public async Task<SalesOfficeDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<SalesOffice, SalesOfficeDTO>(await soUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public Task<List<SalesOfficeDTO>> GetByNameAsync(string name)
+        public async Task<List<SalesOfficeDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<SalesOffice>, List<SalesOfficeDTO>>(await soUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(SalesOfficeDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<SalesOfficeDTO, SalesOffice>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            soUnit.Repository.Insert(model);
+            return soUnit.Commit();
         }
 
-        public Task<int> InsertAsync(SalesOfficeDTO entity)
+        public async Task<int> InsertAsync(SalesOfficeDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<SalesOfficeDTO, SalesOffice>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            soUnit.Repository.Insert(model);
+            return await soUnit.CommitAsync();
         }
 
         public int Update(SalesOfficeDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var model = soUnit.Repository.GetById(entity.Id);
+            MapSalesOffice(entity, model);
+            soUnit.Repository.Update(model);
+            return soUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(SalesOfficeDTO entity)
+        private void MapSalesOffice(SalesOfficeDTO entity, SalesOffice model)
         {
-            throw new NotImplementedException();
+            model.DepartmentId = entity.DepartmentId;
+            model.IsDelete = entity.IsDelete;
+            model.IsGroup = entity.IsGroup;
+            model.ModifiedDate = DateTime.Now;
+            model.Name = entity.Name;
+            model.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> UpdateAsync(SalesOfficeDTO entity)
+        {
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            var model = await soUnit.Repository.GetAsync(p => p.Id == entity.Id);
+            MapSalesOffice(entity, model);
+            soUnit.Repository.Update(model);
+            return await soUnit.CommitAsync();
         }
     }
 }

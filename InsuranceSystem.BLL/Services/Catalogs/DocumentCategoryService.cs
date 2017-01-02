@@ -11,13 +11,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    public class DocumentCategoryService : IDocumentCategoryService, IService<DocumentCategoryDTO>
+    using InsuranceSystem.BLL.Infrastructure;
+
+    public class DocumentCategoryService : IDocumentCategoryService
     {
         readonly IUnitOfWork<DocumentCategory> dcUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public DocumentCategoryService()
         {
             dcUnit = new DocumentCategoryUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(DocumentCategoryDTO entity)

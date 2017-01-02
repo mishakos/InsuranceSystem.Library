@@ -11,14 +11,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
     public class ClientService : IClientService
     {
         readonly IUnitOfWork<Client> clientUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public ClientService()
         {
             clientUnit = new ClientUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(ClientDTO entity)

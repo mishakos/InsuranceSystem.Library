@@ -13,7 +13,7 @@
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
 
-    public class BlankService : IBlankService, IService<BlankDTO>
+    public class BlankService : IBlankService
     {
         readonly IUnitOfWork<Blank> blankUnit;
         readonly AutoMapperConfig autoMapperConfig;

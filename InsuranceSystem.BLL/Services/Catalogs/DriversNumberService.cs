@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class DriversNumberService : IDriversNumberService, IService<DriversNumberDTO>
+    public class DriversNumberService : IDriversNumberService
     {
         readonly IUnitOfWork<DriversNumber> dnUnit;
-
+        readonly AutoMapperConfig autoMapperConfig;
         public DriversNumberService()
         {
             dnUnit = new DriversNumberUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(DriversNumberDTO entity)

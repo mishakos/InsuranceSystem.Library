@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class InsuranceTypeService : IInsuranceTypeService, IService<InsuranceTypeDTO>
+    public class InsuranceTypeService : IInsuranceTypeService
     {
         readonly IUnitOfWork<InsuranceType> itUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public InsuranceTypeService()
         {
-            Mapper.CreateMap<InsuranceType, InsuranceTypeDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             itUnit = new InsuranceTypeUnit();
         }
 

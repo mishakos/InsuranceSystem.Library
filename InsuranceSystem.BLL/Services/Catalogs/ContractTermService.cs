@@ -11,14 +11,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
     public class ContractTermService : IContractTermService
     {
         readonly IUnitOfWork<ContractTerm> contractTermUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public ContractTermService()
         {
             contractTermUnit = new ContractTermUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(ContractTermDTO entity)
