@@ -72,6 +72,11 @@ namespace InsuranceSystem.Mvc.App_Start
             kernel.Bind<IClientService>().To<ClientService>();
             kernel.Bind<IContractTermService>().To<ContractTermService>();
             kernel.Bind<ICurrencyService>().To<CurrencyService>();
+            kernel.Bind<IDepartmentService>().To<DepartmentService>();
+            kernel.Bind<IDocumentCategoryService>().To<DocumentCategoryService>();
+            kernel.Bind<IDriverExperienceService>().To<DriverExperienceService>();
+            kernel.Bind<IDriversNumberService>().To<DriversNumberService>();
+            kernel.Bind<IFirmService>().To<FirmService>();
         }        
     }
 }

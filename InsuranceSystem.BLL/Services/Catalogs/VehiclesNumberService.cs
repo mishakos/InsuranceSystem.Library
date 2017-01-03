@@ -26,22 +26,32 @@
 
         public int Delete(VehiclesNumberDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            vnUnit.Repository.Delete(entity.Id);
+            return vnUnit.Commit();
         }
 
         public int Delete(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            vnUnit.Repository.Delete((int)id);
+            return vnUnit.Commit();
         }
 
-        public Task<int> DeleteAsync(VehiclesNumberDTO entity)
+        public async Task<int> DeleteAsync(VehiclesNumberDTO entity)
         {
-            throw new NotImplementedException();
+            CheckForNull(entity);
+            CheckForNull(entity.Id);
+            vnUnit.Repository.Delete(entity.Id);
+            return await vnUnit.CommitAsync();
         }
 
-        public Task<int> DeleteAsync(int? id)
+        public async Task<int> DeleteAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            vnUnit.Repository.Delete((int)id);
+            return await vnUnit.CommitAsync();
         }
 
         public void Dispose()
@@ -51,47 +61,72 @@
 
         public IEnumerable<VehiclesNumberDTO> GetAll()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<VehiclesNumber>, List<VehiclesNumberDTO>>(vnUnit.Repository.GetAll());
         }
 
-        public Task<List<VehiclesNumberDTO>> GetAllAsync()
+        public async Task<List<VehiclesNumberDTO>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<VehiclesNumber>, List<VehiclesNumberDTO>>(await vnUnit.Repository.GetAllAsync());
         }
 
         public VehiclesNumberDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<VehiclesNumber, VehiclesNumberDTO>(vnUnit.Repository.GetById((int)id));
         }
 
-        public Task<VehiclesNumberDTO> GetByIdAsync(int? id)
+        public async Task<VehiclesNumberDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            return Mapper.Map<VehiclesNumber, VehiclesNumberDTO>(await vnUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public Task<List<VehiclesNumberDTO>> GetByNameAsync(string name)
+        public async Task<List<VehiclesNumberDTO>> GetByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<VehiclesNumber>, List<VehiclesNumberDTO>>(await vnUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(VehiclesNumberDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<VehiclesNumberDTO, VehiclesNumber>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            vnUnit.Repository.Insert(model);
+            return vnUnit.Commit();
         }
 
-        public Task<int> InsertAsync(VehiclesNumberDTO entity)
+        public async Task<int> InsertAsync(VehiclesNumberDTO entity)
         {
-            throw new NotImplementedException();
+            var model = Mapper.Map<VehiclesNumberDTO, VehiclesNumber>(entity);
+            model.DateCreate = DateTime.Now;
+            model.ModifiedDate = DateTime.Now;
+            vnUnit.Repository.Insert(model);
+            return await  vnUnit.CommitAsync();
         }
 
         public int Update(VehiclesNumberDTO entity)
         {
-            throw new NotImplementedException();
+            var model = vnUnit.Repository.GetById(entity.Id);
+            MapModel(entity, model);
+            vnUnit.Repository.Update(model);
+            return vnUnit.Commit();
         }
 
-        public Task<int> UpdateAsync(VehiclesNumberDTO entity)
+        private static void MapModel(VehiclesNumberDTO entity, VehiclesNumber model)
         {
-            throw new NotImplementedException();
+            model.IsDelete = entity.IsDelete;
+            model.IsGroup = entity.IsGroup;
+            model.ModifiedDate = DateTime.Now;
+            model.Name = entity.Name;
+            model.ParentId = entity.ParentId;
+        }
+
+        public async Task<int> UpdateAsync(VehiclesNumberDTO entity)
+        {
+            var model = await  vnUnit.Repository.GetAsync(p => p.Id == entity.Id);
+            MapModel(entity, model);
+            vnUnit.Repository.Update(model);
+            return await  vnUnit.CommitAsync();
         }
     }
 }

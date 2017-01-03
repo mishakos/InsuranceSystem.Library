@@ -250,6 +250,10 @@
     <Compile Include="Controllers\Catalogs\ContractTermController.cs" />
     <Compile Include="Controllers\Catalogs\CurrencyController.cs" />
     <Compile Include="Controllers\Catalogs\DepartmentController.cs" />
+    <Compile Include="Controllers\Catalogs\DocumentCategoryController.cs" />
+    <Compile Include="Controllers\Catalogs\DriverExperienceController.cs" />
+    <Compile Include="Controllers\Catalogs\DriversNumberController.cs" />
+    <Compile Include="Controllers\Catalogs\FirmController.cs" />
     <Compile Include="Controllers\Documents\PostBlankController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -258,7 +262,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Catalogs\AdressModel.cs" />
+    <Compile Include="Models\Catalogs\AddressModel.cs" />
     <Compile Include="Models\Catalogs\AreaOfUseModel.cs" />
     <Compile Include="Models\Catalogs\BankAccountModel.cs" />
     <Compile Include="Models\Catalogs\BankModel.cs" />
@@ -431,6 +435,26 @@
     <Content Include="Views\Department\Create.cshtml" />
     <Content Include="Views\Department\Edit.cshtml" />
     <Content Include="Views\Department\Delete.cshtml" />
+    <Content Include="Views\DocumentCategory\Index.cshtml" />
+    <Content Include="Views\DocumentCategory\Details.cshtml" />
+    <Content Include="Views\DocumentCategory\Create.cshtml" />
+    <Content Include="Views\DocumentCategory\Edit.cshtml" />
+    <Content Include="Views\DocumentCategory\Delete.cshtml" />
+    <Content Include="Views\DriverExperience\Index.cshtml" />
+    <Content Include="Views\DriverExperience\Details.cshtml" />
+    <Content Include="Views\DriverExperience\Create.cshtml" />
+    <Content Include="Views\DriverExperience\Edit.cshtml" />
+    <Content Include="Views\DriverExperience\Delete.cshtml" />
+    <Content Include="Views\DriversNumber\Index.cshtml" />
+    <Content Include="Views\DriversNumber\Details.cshtml" />
+    <Content Include="Views\DriversNumber\Create.cshtml" />
+    <Content Include="Views\DriversNumber\Edit.cshtml" />
+    <Content Include="Views\DriversNumber\Delete.cshtml" />
+    <Content Include="Views\Firm\Index.cshtml" />
+    <Content Include="Views\Firm\Details.cshtml" />
+    <Content Include="Views\Firm\Create.cshtml" />
+    <Content Include="Views\Firm\Edit.cshtml" />
+    <Content Include="Views\Firm\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
