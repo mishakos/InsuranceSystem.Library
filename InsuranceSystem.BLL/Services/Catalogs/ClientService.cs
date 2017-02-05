@@ -59,35 +59,30 @@
 
         public IEnumerable<ClientDTO> GetAll()
         {
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<IEnumerable<Client>, IEnumerable<ClientDTO>>(clientUnit
                 .Repository.GetAll());
         }
 
         public async Task<List<ClientDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
                 .Repository.GetAllAsync());
         }
 
         public async Task<List<ClientDTO>> GetByEDRPOU(string edrpou)
         {
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
                 .Repository.GetManyAsync(p => p.EDRPOU.ToUpper().Contains(edrpou.ToUpper())));
         }
 
         public async Task<List<ClientDTO>> GetByFactAddressIdAsync(int id)
         {
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
                 .Repository.GetManyAsync(p => p.FactAdressId == id));
         }
 
         public async Task<List<ClientDTO>> GetByFullNameAsync(string name)
         {
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
                 .Repository.GetManyAsync(p => p.FullName.ToUpper().Contains(name.ToUpper())));
         }
@@ -95,28 +90,24 @@
         public ClientDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<Client, ClientDTO>(clientUnit.Repository.GetById((int)id));
         }
 
         public async Task<ClientDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<Client, ClientDTO>(await clientUnit
                 .Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<ClientDTO>> GetByITNAsync(string itn)
         {
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
                 .Repository.GetManyAsync(p => p.ITN.ToUpper().Contains(itn.ToUpper())));
         }
 
         public async Task<List<ClientDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<Client, ClientDTO>();
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
@@ -124,7 +115,6 @@
         public int Insert(ClientDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<ClientDTO, Client>();
             var item = Mapper.Map<ClientDTO, Client>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;
@@ -135,7 +125,6 @@
         public async Task<int> InsertAsync(ClientDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<ClientDTO, Client>();
             var item = Mapper.Map<ClientDTO, Client>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;

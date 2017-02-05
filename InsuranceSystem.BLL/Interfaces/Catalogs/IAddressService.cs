@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace InsuranceSystem.BLL.Interfaces.Catalogs
 {
-    public interface IAddressService
+    public interface IAddressService : IService<AddressDTO>
     {
         Task<List<AddressDTO>> GetByFirstLineAsync(string firstLine);
         Task<List<AddressDTO>> GetBySecondLineAsync(string secondAddress);

@@ -61,14 +61,12 @@
 
         public IEnumerable<DocumentCategoryDTO> GetAll()
         {
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
             return Mapper.Map<IEnumerable<DocumentCategory>, IEnumerable<DocumentCategoryDTO>>(dcUnit
                 .Repository.GetAll());
         }
 
         public async Task<List<DocumentCategoryDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
             return  Mapper.Map<List<DocumentCategory>, List<DocumentCategoryDTO>>(await dcUnit
                 .Repository.GetAllAsync());
         }
@@ -78,21 +76,18 @@
             CheckForNull(id);
             var item = dcUnit.Repository.GetById((int)id);
             CheckForNull(item);
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
             return Mapper.Map<DocumentCategory, DocumentCategoryDTO>(item);
         }
 
         public async Task<DocumentCategoryDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
             return  Mapper.Map<DocumentCategory, DocumentCategoryDTO>(await dcUnit
                 .Repository.GetAsync(p => p.Id == (int)id));
         }
 
         public async Task<List<DocumentCategoryDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
             return  Mapper.Map<List<DocumentCategory>, List<DocumentCategoryDTO>>(await dcUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }

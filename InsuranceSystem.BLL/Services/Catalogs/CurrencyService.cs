@@ -61,42 +61,36 @@
 
         public IEnumerable<CurrencyDTO> GetAll()
         {
-            Mapper.CreateMap<Currency, CurrencyDTO>();
             return Mapper.Map<IEnumerable<Currency>, IEnumerable<CurrencyDTO>>(currencyUnit
                 .Repository.GetAll());
         }
 
         public async Task<List<CurrencyDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<Currency, CurrencyDTO>();
             return Mapper.Map<List<Currency>, List<CurrencyDTO>>(
                 await currencyUnit.Repository.GetAllAsync());
         }
 
         public async Task<CurrencyDTO> GetByCodeAsync(string code)
         {
-            Mapper.CreateMap<Currency, CurrencyDTO>();
             return Mapper.Map<Currency, CurrencyDTO>(await currencyUnit.Repository
                 .GetAsync(p => p.Code.ToUpper().Contains(code.ToUpper())));
         }
 
         public CurrencyDTO GetById(int? id)
         {
-            Mapper.CreateMap<Currency, CurrencyDTO>();
             return Mapper.Map<Currency, CurrencyDTO>(currencyUnit.Repository
                 .GetById((int)id));
         }
 
         public async Task<CurrencyDTO> GetByIdAsync(int? id)
         {
-            Mapper.CreateMap<Currency, CurrencyDTO>();
             return Mapper.Map<Currency, CurrencyDTO>(await currencyUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
         public async Task<List<CurrencyDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<Currency, CurrencyDTO>();
             return Mapper.Map<List<Currency>, List<CurrencyDTO>>(await 
                 currencyUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }

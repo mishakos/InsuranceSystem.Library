@@ -58,29 +58,25 @@
 
         public IEnumerable<BankAccountDTO> GetAll()
         {
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return Mapper.Map<IEnumerable<BankAccount>, IEnumerable<BankAccountDTO>>(
                 bankAccountUnit.Repository.GetAll());
         }
 
         public async Task<List<BankAccountDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetAllAsync());
         }
 
         public async Task<List<BankAccountDTO>> GetByAccountNumberAsync(string number)
         {
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
-            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
+           return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.AccountNumber.Trim() == number));
         }
 
         public async Task<List<BankAccountDTO>> GetByBankIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await 
                 bankAccountUnit.Repository.GetManyAsync(p => p.BankId == (int)id));
         }
@@ -88,7 +84,6 @@
         public async Task<List<BankAccountDTO>> GetByCloseDate(DateTime date)
         {
             CheckForNull(date);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.CloseDate == date));
         }
@@ -96,7 +91,6 @@
         public async Task<List<BankAccountDTO>> GetByCurrencyIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.CurrencyId == (int)id));
         }
@@ -104,7 +98,6 @@
         public BankAccountDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return Mapper.Map<BankAccount, BankAccountDTO>(
                 bankAccountUnit.Repository.GetById((int)id));
         }
@@ -112,7 +105,6 @@
         public async Task<BankAccountDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return  Mapper.Map<BankAccount, BankAccountDTO>(await
                 bankAccountUnit.Repository.GetAsync(p => p.Id == id));
 
@@ -121,7 +113,6 @@
         public async Task<List<BankAccountDTO>> GetByOpenDate(DateTime date)
         {
             CheckForNull(date);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
                 bankAccountUnit.Repository.GetManyAsync(p => p.OpenDate == date));
 
@@ -130,7 +121,6 @@
         public int Insert(BankAccountDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             bankAccountUnit.Repository.Insert(Mapper.Map<BankAccountDTO, BankAccount>(entity));
             return bankAccountUnit.Commit();
         }
@@ -138,7 +128,6 @@
         public async Task<int> InsertAsync(BankAccountDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             bankAccountUnit.Repository.Insert(Mapper.Map<BankAccountDTO, BankAccount>(entity));
             return await bankAccountUnit.CommitAsync();
         }
@@ -178,7 +167,6 @@
 
         public async Task<List<BankAccountDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<BankAccount, BankAccountDTO>();
             return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await bankAccountUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }

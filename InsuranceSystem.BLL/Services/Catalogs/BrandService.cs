@@ -67,14 +67,12 @@
 
         public IEnumerable<BrandDTO> GetAll()
         {
-            Mapper.CreateMap<Brand, BrandDTO>();
             return Mapper.Map<IEnumerable<Brand>, IEnumerable<BrandDTO>>(brandUnit
                 .Repository.GetAll());
         }
 
         public async Task<List<BrandDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<Brand, BrandDTO>();
             return Mapper.Map<List<Brand>, List<BrandDTO>>(await brandUnit
                 .Repository.GetAllAsync());
         }
@@ -82,21 +80,18 @@
         public BrandDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Brand, BrandDTO>();
             return Mapper.Map<Brand, BrandDTO>(brandUnit.Repository.GetById((int)id));
         }
 
         public async Task<BrandDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Brand, BrandDTO>();
             return  Mapper.Map<Brand, BrandDTO>(await brandUnit
                 .Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<BrandDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<Brand, BrandDTO>();
             return  Mapper.Map<List<Brand>, List<BrandDTO>>(await brandUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
@@ -104,7 +99,6 @@
         public int Insert(BrandDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BrandDTO, Brand>();
             var model = Mapper.Map<BrandDTO, Brand>(entity);
             model.DateCreate = DateTime.Now;
             model.ModifiedDate = DateTime.Now;
@@ -115,7 +109,6 @@
         public async Task<int> InsertAsync(BrandDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BrandDTO, Brand>();
             var model = Mapper.Map<BrandDTO, Brand>(entity);
             model.DateCreate = DateTime.Now;
             model.ModifiedDate = DateTime.Now;

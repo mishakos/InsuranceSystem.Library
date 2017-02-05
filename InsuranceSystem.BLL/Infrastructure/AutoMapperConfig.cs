@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using InsuranceSystem.BLL.DTO.Catalogs;
 using InsuranceSystem.Library.Models.Catalogs;
+using InsuranceSystem.Library.Models.Enums;
+using InsuranceSystem.BLL.DTO.Enums;
 
 namespace InsuranceSystem.BLL.Infrastructure
 {
@@ -36,7 +38,8 @@ namespace InsuranceSystem.BLL.Infrastructure
             CreateMap<DocumentCategory, DocumentCategoryDTO>();
             CreateMap<DriverExperience, DriverExperienceDTO>();
             CreateMap<DriversNumber, DriversNumberDTO>();
-            CreateMap<Firm, FirmDTO>();
+            //Mapper.Initialize(c => c.CreateMap<Firm, FirmDTO>().Include<LegalType, LegalTypeDTO>())
+            //CreateMap<Firm, FirmDTO>();
             CreateMap<FraudAttempt, FraudAttemptDTO>();
             CreateMap<InsuranceProduct, InsuranceProductDTO>();
             CreateMap<InsuranceType, InsuranceTypeDTO>();
@@ -52,11 +55,11 @@ namespace InsuranceSystem.BLL.Infrastructure
 
         private static void CreateMap<T, U>() where T : Catalog where U : CatalogDTO
         {
-            Mapper.CreateMap<T, U>()
+            Mapper.Initialize(c => c.CreateMap<T, U>()
                 //.ForMember(dest => dest.ParentName, opt => opt.MapFrom(src => src.Parent.Name))
                 .ReverseMap().ForSourceMember(src => src.Id, opt => opt.Ignore())
                              .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
-                             .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
+                             .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore()));
         }
 
         public static AutoMapperConfig Instance

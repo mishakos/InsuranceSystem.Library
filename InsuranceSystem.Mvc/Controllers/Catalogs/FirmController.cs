@@ -22,7 +22,7 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         // GET: Firm
         public async Task<ActionResult> Index()
         {
-            var model = Mapper.Map<List<FirmDTO>, List<FirmModel>>(await _service.GetAllAsync());
+            var model = Mapper.Map<IEnumerable<FirmDTO>, List<FirmModel>>(await _service.GetAllAsync());
             return View(model);
         }
 

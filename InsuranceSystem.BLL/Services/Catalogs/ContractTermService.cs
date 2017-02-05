@@ -60,14 +60,12 @@
 
         public IEnumerable<ContractTermDTO> GetAll()
         {
-            Mapper.CreateMap<ContractTerm, ContractTermDTO>();
             return Mapper.Map<IEnumerable<ContractTerm>, IEnumerable<ContractTermDTO>>(
                 contractTermUnit.Repository.GetAll());
         }
 
         public async Task<List<ContractTermDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<ContractTerm, ContractTermDTO>();
             return Mapper.Map<List<ContractTerm>, List<ContractTermDTO>>
                 (await contractTermUnit.Repository.GetAllAsync());
         }
@@ -75,7 +73,6 @@
         public ContractTermDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<ContractTerm, ContractTermDTO>();
             return Mapper.Map<ContractTerm, ContractTermDTO>(contractTermUnit
                 .Repository.GetById((int)id));
 
@@ -84,14 +81,12 @@
         public async Task<ContractTermDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<ContractTerm, ContractTermDTO>();
             return Mapper.Map<ContractTerm, ContractTermDTO>(await contractTermUnit
                 .Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<ContractTermDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<ContractTerm, ContractTermDTO>();
             return Mapper.Map<List<ContractTerm>, List<ContractTermDTO>>(await
                 contractTermUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
 
@@ -100,7 +95,6 @@
         public int Insert(ContractTermDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<ContractTermDTO, ContractTerm>();
             var item = Mapper.Map<ContractTermDTO, ContractTerm>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;
@@ -111,7 +105,6 @@
         public async Task<int> InsertAsync(ContractTermDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<ContractTermDTO, ContractTerm>();
             var item = Mapper.Map<ContractTermDTO, ContractTerm>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;

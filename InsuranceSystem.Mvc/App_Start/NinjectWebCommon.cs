@@ -64,6 +64,7 @@ namespace InsuranceSystem.Mvc.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IAreaOfUseService>().To<AreaOfUseService>();
+            kernel.Bind<IAddressService>().To<AddressService>();
             kernel.Bind<IBankAccountService>().To<BankAccountService>();
             kernel.Bind<IBankService>().To<BankService>();
             kernel.Bind<IBrandService>().To<BrandService>();
@@ -77,6 +78,7 @@ namespace InsuranceSystem.Mvc.App_Start
             kernel.Bind<IDriverExperienceService>().To<DriverExperienceService>();
             kernel.Bind<IDriversNumberService>().To<DriversNumberService>();
             kernel.Bind<IFirmService>().To<FirmService>();
+            kernel.Bind<IFraudAttemptService>().To<FraudAttemptService>();
         }        
     }
 }

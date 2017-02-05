@@ -58,14 +58,12 @@
 
         public IEnumerable<BonusMalusDTO> GetAll()
         {
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
             return Mapper.Map<IEnumerable<BonusMalus>, IEnumerable<BonusMalusDTO>>
                 (bonusMalusUnit.Repository.GetAll());
         }
 
         public async Task<List<BonusMalusDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
             return Mapper.Map<List<BonusMalus>, List<BonusMalusDTO>>
                 (await bonusMalusUnit.Repository.GetAllAsync());
         }
@@ -73,7 +71,6 @@
         public BonusMalusDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
             return Mapper.Map<BonusMalus, BonusMalusDTO>(bonusMalusUnit
                 .Repository.GetById((int)id));
         }
@@ -81,14 +78,12 @@
         public async Task<BonusMalusDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
             return Mapper.Map<BonusMalus, BonusMalusDTO>
                 (await bonusMalusUnit.Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<BonusMalusDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
             return Mapper.Map<List<BonusMalus>, List<BonusMalusDTO>>
                 (await bonusMalusUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
@@ -96,7 +91,6 @@
         public int Insert(BonusMalusDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BonusMalusDTO, BonusMalus>();
             var item = Mapper.Map<BonusMalusDTO, BonusMalus>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;
@@ -107,7 +101,6 @@
         public async Task<int> InsertAsync(BonusMalusDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BonusMalusDTO, BonusMalus>();
             var item = Mapper.Map<BonusMalusDTO, BonusMalus>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;

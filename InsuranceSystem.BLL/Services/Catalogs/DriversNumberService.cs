@@ -63,13 +63,11 @@
 
         public IEnumerable<DriversNumberDTO> GetAll()
         {
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
             return Mapper.Map<IEnumerable<DriversNumber>, IEnumerable<DriversNumberDTO>>(dnUnit.Repository.GetAll());
         }
 
         public async Task<List<DriversNumberDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
             return Mapper.Map<List<DriversNumber>, List<DriversNumberDTO>>(await dnUnit
                 .Repository.GetAllAsync());
         }
@@ -77,21 +75,18 @@
         public DriversNumberDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
             return Mapper.Map<DriversNumber, DriversNumberDTO>(dnUnit.Repository.GetById((int)id));
         }
 
         public async Task<DriversNumberDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
             return Mapper.Map<DriversNumber, DriversNumberDTO>(await dnUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
         public async Task<List<DriversNumberDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
             return Mapper.Map<List<DriversNumber>, List<DriversNumberDTO>>(await dnUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }

@@ -13,16 +13,16 @@
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
     using InsuranceSystem.BLL.Infrastructure;
+    using System.Linq;
 
     public class FirmService : IFirmService
     {
         readonly IUnitOfWork<Firm> firmUnit;
-        readonly AutoMapperConfig autoMapperConfig;
+       
 
         public FirmService()
         {
             firmUnit = new FirmUnit();
-            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(FirmDTO entity)
@@ -62,43 +62,78 @@
 
         public IEnumerable<FirmDTO> GetAll()
         {
-            Mapper.CreateMap<Firm, FirmDTO>();
-            return Mapper.Map<IEnumerable<Firm>, IEnumerable<FirmDTO>>(firmUnit.Repository.GetAll());
+            var result = firmUnit.Repository.GetAll();
+            return MapFirmList(result);
         }
 
-        public async Task<List<FirmDTO>> GetAllAsync()
+        private static IEnumerable<FirmDTO> MapFirmList(IEnumerable<Firm> result)
         {
-            Mapper.CreateMap<Firm, FirmDTO>();
-            return Mapper.Map<List<Firm>, List<FirmDTO>>(await firmUnit.Repository.GetAllAsync());
+            return from p in result
+                   select new FirmDTO()
+                   {
+                       BankAccountId = p.BankAccountId,
+                       DateCreate = p.DateCreate,
+                       EDRPOU = p.EDRPOU,
+                       FactAdressId = p.FactAdressId,
+                       FullName = p.FullName,
+                       Id = p.Id,
+                       IsDelete = p.IsDelete,
+                       IsGroup = p.IsGroup,
+                       LegalAdressId = p.LegalAdressId,
+                       LegalType = (DTO.Enums.LegalTypeDTO)(int)p.LegalType,
+                       ModifiedDate = p.ModifiedDate,
+                       Name = p.Name,
+                       ParentId = p.ParentId
+                   };
+        }
+        private static FirmDTO MapFirm(Firm item)
+        {
+            return new FirmDTO()
+                   {
+                       BankAccountId = item.BankAccountId,
+                       DateCreate = item.DateCreate,
+                       EDRPOU = item.EDRPOU,
+                       FactAdressId = item.FactAdressId,
+                       FullName = item.FullName,
+                       Id = item.Id,
+                       IsDelete = item.IsDelete,
+                       IsGroup = item.IsGroup,
+                       LegalAdressId = item.LegalAdressId,
+                       LegalType = (DTO.Enums.LegalTypeDTO)(int)item.LegalType,
+                       ModifiedDate = item.ModifiedDate,
+                       Name = item.Name,
+                       ParentId = item.ParentId
+                   };
         }
 
-        public async Task<List<FirmDTO>> GetByEDRPOUAsync(string edrpou)
+        public async Task<IEnumerable<FirmDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<Firm, FirmDTO>();
-            return Mapper.Map<List<Firm>, List<FirmDTO>>(await firmUnit.Repository
+            return MapFirmList(await firmUnit.Repository.GetAllAsync());
+        }
+
+        public async Task<IEnumerable<FirmDTO>> GetByEDRPOUAsync(string edrpou)
+        {
+            return MapFirmList(await firmUnit.Repository
                 .GetManyAsync(p => p.EDRPOU.ToUpper().Contains(edrpou.ToUpper())));
         }
 
         public FirmDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Firm, FirmDTO>();
-            return Mapper.Map<Firm, FirmDTO>(firmUnit.Repository.GetById((int)id));
+            return MapFirm(firmUnit.Repository.GetById((int)id));
         }
 
         public async Task<FirmDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Firm, FirmDTO>();
-            return Mapper.Map<Firm, FirmDTO>(await firmUnit.Repository
+            return MapFirm(await firmUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
-        public async Task<List<FirmDTO>> GetByNameAsync(string name)
+        public async Task<IEnumerable<FirmDTO>> GetByNameAsync(string name)
         {
             CheckForNull(name);
-            Mapper.CreateMap<Firm, FirmDTO>();
-            return Mapper.Map<List<Firm>, List<FirmDTO>>(await firmUnit.Repository
+            return MapFirmList(await firmUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
