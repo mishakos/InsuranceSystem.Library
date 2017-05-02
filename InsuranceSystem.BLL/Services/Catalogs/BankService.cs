@@ -65,34 +65,35 @@
 
         public async Task<List<BankDTO>> GetAllAsync()
         {
-            return await Mapper.Map<Task<List<Bank>>,
-                Task<List<BankDTO>>>(bankUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<Bank>,
+                List<BankDTO>>(await bankUnit.Repository.GetAllAsync());
         }
 
         public async Task<List<BankDTO>> GetByAddressAsync(string address)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.Adress.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.Adress.ToUpper()
                 .Contains(address.ToUpper())));
         }
 
         public async Task<List<BankDTO>> GetByCityAsync(string city)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.City.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.City.ToUpper()
                 .Contains(city.ToUpper())));
         }
 
         public async Task<List<BankDTO>> GetByEDRPOUAsync(string edrpou)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.EDRPOU.ToUpper().Contains(edrpou.ToUpper())));
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.EDRPOU.ToUpper()
+                .Contains(edrpou.ToUpper())));
         }
 
         public async Task<List<BankDTO>> GetByFullNameAsync(string fullName)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.FullName.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.FullName.ToUpper()
                 .Contains(fullName.ToUpper())));
         }
 
@@ -105,43 +106,43 @@
         public async Task<BankDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            return await Mapper.Map<Task<Bank>, Task<BankDTO>>
-                (bankUnit.Repository.GetAsync(p => p.Id == id));
+            return Mapper.Map<Bank, BankDTO>
+                (await bankUnit.Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<BankDTO>> GetByMFOAsync(string mfo)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.MFO.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.MFO.ToUpper()
                 .Contains(mfo.ToUpper())));
         }
 
         public async Task<List<BankDTO>> GetByPhonesAsync(string phones)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.Phones.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.Phones.ToUpper()
                 .Contains(phones.ToUpper())));
         }
 
         public async Task<List<BankDTO>> GetByRateAsync(string rate)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.Rate.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.Rate.ToUpper()
                 .Contains(rate.ToUpper())));
         }
 
         public async Task<List<BankDTO>> GetByRateSource(string rateSource)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.RateSource.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.RateSource.ToUpper()
                 .Contains(rateSource.ToUpper())));
         }
 
         public async Task<List<BankDTO>> GetByParentId(int? id)
         {
             CheckForNull(id);
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.ParentId == id));
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.ParentId == id));
         }
 
         public int Insert(BankDTO entity)
@@ -202,7 +203,7 @@
 
         public async Task<List<BankDTO>> GetByNameAsync(string name)
         {
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>(bankUnit.Repository
+            return Mapper.Map<List<Bank>, List<BankDTO>>(await bankUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
     }

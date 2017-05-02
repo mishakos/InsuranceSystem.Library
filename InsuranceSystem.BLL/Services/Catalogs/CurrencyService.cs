@@ -92,7 +92,8 @@
         public async Task<List<CurrencyDTO>> GetByNameAsync(string name)
         {
             return Mapper.Map<List<Currency>, List<CurrencyDTO>>(await 
-                currencyUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+                currencyUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
+                .Contains(name.ToUpper())));
         }
 
         public int Insert(CurrencyDTO entity)

@@ -81,14 +81,14 @@
 
         public async Task<List<AddressDTO>> GetAllAsync()
         {
-            return await Mapper.Map<Task<List<Address>>,
-                Task<List<AddressDTO>>>(addressUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<Address>,
+                List<AddressDTO>>(await addressUnit.Repository.GetAllAsync());
         }
 
         public async Task<AddressDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            return await Mapper.Map<Task<Address>, Task<AddressDTO>>(addressUnit
+            return Mapper.Map<Address, AddressDTO>(await addressUnit
                 .Repository.GetAsync(p => p.Id == id));
         }
 

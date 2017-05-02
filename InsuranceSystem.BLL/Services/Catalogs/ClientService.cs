@@ -72,7 +72,8 @@
         public async Task<List<ClientDTO>> GetByEDRPOU(string edrpou)
         {
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
-                .Repository.GetManyAsync(p => p.EDRPOU.ToUpper().Contains(edrpou.ToUpper())));
+                .Repository.GetManyAsync(p => p.EDRPOU.ToUpper()
+                .Contains(edrpou.ToUpper())));
         }
 
         public async Task<List<ClientDTO>> GetByFactAddressIdAsync(int id)
@@ -84,7 +85,8 @@
         public async Task<List<ClientDTO>> GetByFullNameAsync(string name)
         {
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
-                .Repository.GetManyAsync(p => p.FullName.ToUpper().Contains(name.ToUpper())));
+                .Repository.GetManyAsync(p => p.FullName.ToUpper()
+                .Contains(name.ToUpper())));
         }
 
         public ClientDTO GetById(int? id)
@@ -109,7 +111,8 @@
         public async Task<List<ClientDTO>> GetByNameAsync(string name)
         {
             return Mapper.Map<List<Client>, List<ClientDTO>>(await clientUnit
-                .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+                .Repository.GetManyAsync(p => p.Name.ToUpper()
+                .Contains(name.ToUpper())));
         }
 
         public int Insert(ClientDTO entity)
