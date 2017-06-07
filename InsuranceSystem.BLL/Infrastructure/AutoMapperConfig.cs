@@ -20,46 +20,51 @@ namespace InsuranceSystem.BLL.Infrastructure
             Config();
         }
 
-        private void Config()
+        public void Config()
         {
+
             // Catalogs
-            CreateMap<AreaOfUse, AreaOfUseDTO>();
-            CreateMap<Address, AddressDTO>();
-            CreateMap<Bank, BankDTO>();
-            CreateMap<BankAccount, BankAccountDTO>();
-            CreateMap<Client, ClientDTO>();
-            CreateMap<Blank, BlankDTO>();
-            CreateMap<BonusMalus, BonusMalusDTO>();
-            CreateMap<BlankType, BlankTypeDTO>();
-            CreateMap<Brand, BrandDTO>();
-            CreateMap<ContractTerm, ContractTermDTO>();
-            CreateMap<Currency, CurrencyDTO>();
-            CreateMap<Department, DepartmentDTO>();
-            CreateMap<DocumentCategory, DocumentCategoryDTO>();
-            CreateMap<DriverExperience, DriverExperienceDTO>();
-            CreateMap<DriversNumber, DriversNumberDTO>();
-            //Mapper.Initialize(c => c.CreateMap<Firm, FirmDTO>().Include<LegalType, LegalTypeDTO>())
-            //CreateMap<Firm, FirmDTO>();
-            CreateMap<FraudAttempt, FraudAttemptDTO>();
-            CreateMap<InsuranceProduct, InsuranceProductDTO>();
-            CreateMap<InsuranceType, InsuranceTypeDTO>();
-            CreateMap<LocalityVehicleRegistration, LocalityVehicleRegistrationDTO>();
-            CreateMap<Model, ModelDTO>();
-            CreateMap<Person, PersonDTO>();
-            CreateMap<SalesOffice, SalesOfficeDTO>();
-            CreateMap<Status, StatusDTO>();
-            CreateMap<TerritoryRegistration, TerritoryRegistrationDTO>();
-            CreateMap<Vehicle, VehicleDTO>();
-            CreateMap<VehiclesNumber, VehiclesNumberDTO>();
+            Mapper.Initialize(c =>
+            {
+                CreateMap<AreaOfUse, AreaOfUseDTO>(c);
+                CreateMap<Address, AddressDTO>(c);
+                CreateMap<Bank, BankDTO>(c);
+                CreateMap<BankAccount, BankAccountDTO>(c);
+                CreateMap<Client, ClientDTO>(c);
+                CreateMap<Blank, BlankDTO>(c);
+                CreateMap<BonusMalus, BonusMalusDTO>(c);
+                CreateMap<BlankType, BlankTypeDTO>(c);
+                CreateMap<Brand, BrandDTO>(c);
+                CreateMap<ContractTerm, ContractTermDTO>(c);
+                CreateMap<Currency, CurrencyDTO>(c);
+                CreateMap<Department, DepartmentDTO>(c);
+                CreateMap<DocumentCategory, DocumentCategoryDTO>(c);
+                CreateMap<DriverExperience, DriverExperienceDTO>(c);
+                CreateMap<DriversNumber, DriversNumberDTO>(c);
+                CreateMap<Firm, FirmDTO>(c);
+                CreateMap<FraudAttempt, FraudAttemptDTO>(c);
+                CreateMap<InsuranceProduct, InsuranceProductDTO>(c);
+                CreateMap<InsuranceType, InsuranceTypeDTO>(c);
+                CreateMap<LocalityVehicleRegistration, LocalityVehicleRegistrationDTO>(c);
+                CreateMap<Model, ModelDTO>(c);
+                CreateMap<Person, PersonDTO>(c);
+                CreateMap<SalesOffice, SalesOfficeDTO>(c);
+                CreateMap<Status, StatusDTO>(c);
+                CreateMap<TerritoryRegistration, TerritoryRegistrationDTO>(c);
+                CreateMap<Vehicle, VehicleDTO>(c);
+                CreateMap<VehiclesNumber, VehiclesNumberDTO>(c);
+            });
         }
 
-        private static void CreateMap<T, U>() where T : Catalog where U : CatalogDTO
+
+        private static IMappingExpression<U, T> CreateMap<T, U>(IMapperConfigurationExpression c)
+            where T : Catalog
+            where U : CatalogDTO
         {
-            Mapper.Initialize(c => c.CreateMap<T, U>()
-                //.ForMember(dest => dest.ParentName, opt => opt.MapFrom(src => src.Parent.Name))
-                .ReverseMap().ForSourceMember(src => src.Id, opt => opt.Ignore())
-                             .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
-                             .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore()));
+            return c.CreateMap<T, U>()
+                            .ReverseMap().ForSourceMember(src => src.Id, opt => opt.Ignore())
+                                         .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
+                                         .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore());
         }
 
         public static AutoMapperConfig Instance

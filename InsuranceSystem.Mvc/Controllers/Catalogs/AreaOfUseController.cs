@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InsuranceSystem.BLL.DTO.Catalogs;
 using InsuranceSystem.BLL.Interfaces.Catalogs;
+using InsuranceSystem.Mvc.App_Start;
 using InsuranceSystem.MVC.Models.Catalogs;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         // GET: AreaOfUse
         public async Task<ActionResult> Index()
         {
+            AutoMapperConfig.CreateMap<AreaOfUseDTO, AreaOfUseModel>();
             var model = Mapper.Map<List<AreaOfUseDTO>, List<AreaOfUseModel>>(await _service.GetAllAsync());
             return View(model);
         }
