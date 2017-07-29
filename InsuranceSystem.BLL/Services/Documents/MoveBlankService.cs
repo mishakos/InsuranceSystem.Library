@@ -75,7 +75,7 @@
         public async Task HoldMoveBlankAsync(int? id)
         {
             CheckForNull(id);
-            
+            throw new NotImplementedException();
         }
 
         public int Insert(MoveBlankDTO entity)
