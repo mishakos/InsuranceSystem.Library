@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using InsuranceSystem.BLL.DTO.Catalogs;
 using InsuranceSystem.BLL.Interfaces;
+using InsuranceSystem.BLL.Interfaces.Catalogs;
 using InsuranceSystem.BLL.Services.Catalogs;
 using InsuranceSystem.MVC.Models.Catalogs;
 
@@ -14,11 +15,13 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
 {
     public class BlankController : Controller
     {
-        private IService<BlankDTO> blankService;
+        private IBlankService blankService;
+        private IBlankTypeService blankTypeService;
 
         public BlankController()
         {
             blankService = new BlankService();
+            blankTypeService = new BlankTypeService();
         }
         // GET: Blank
         public async Task<ActionResult> Index()
@@ -36,9 +39,10 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         }
 
         // GET: Blank/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             var model = new BlankModel();
+            model.BlankTypes = Mapper.Map<List<BlankTypeModel>>(await blankTypeService.GetAllAsync());
             return View(model);
         }
 
@@ -62,6 +66,7 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         public async Task<ActionResult> Edit(int id)
         {
             var model = Mapper.Map<BlankModel>(await blankService.GetByIdAsync(id));
+            model.BlankTypes = Mapper.Map<List<BlankTypeModel>>(await blankTypeService.GetAllAsync());
             return View(model);
         }
 

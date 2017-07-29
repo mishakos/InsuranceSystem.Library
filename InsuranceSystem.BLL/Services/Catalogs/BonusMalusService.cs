@@ -11,13 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class BonusMalusService : IBonusMalusService, IService<BonusMalusDTO>
+    public class BonusMalusService : IBonusMalusService
     {
         readonly IUnitOfWork<BonusMalus> bonusMalusUnit;
+        readonly AutoMapperConfig autoMapperConfig;
         public BonusMalusService()
         {
             bonusMalusUnit = new BonusMalusUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(BonusMalusDTO entity)
@@ -55,22 +58,19 @@
 
         public IEnumerable<BonusMalusDTO> GetAll()
         {
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
             return Mapper.Map<IEnumerable<BonusMalus>, IEnumerable<BonusMalusDTO>>
                 (bonusMalusUnit.Repository.GetAll());
         }
 
         public async Task<List<BonusMalusDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
-            return await Mapper.Map<Task<List<BonusMalus>>, Task<List<BonusMalusDTO>>>
-                (bonusMalusUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<BonusMalus>, List<BonusMalusDTO>>
+                (await bonusMalusUnit.Repository.GetAllAsync());
         }
 
         public BonusMalusDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
             return Mapper.Map<BonusMalus, BonusMalusDTO>(bonusMalusUnit
                 .Repository.GetById((int)id));
         }
@@ -78,22 +78,20 @@
         public async Task<BonusMalusDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
-            return await Mapper.Map<Task<BonusMalus>, Task<BonusMalusDTO>>
-                (bonusMalusUnit.Repository.GetAsync(p => p.Id == id));
+            return Mapper.Map<BonusMalus, BonusMalusDTO>
+                (await bonusMalusUnit.Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<BonusMalusDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<BonusMalus, BonusMalusDTO>();
-            return await Mapper.Map<Task<List<BonusMalus>>, Task<List<BonusMalusDTO>>>
-                (bonusMalusUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+            return Mapper.Map<List<BonusMalus>, List<BonusMalusDTO>>
+                (await bonusMalusUnit.Repository
+                .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(BonusMalusDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BonusMalusDTO, BonusMalus>();
             var item = Mapper.Map<BonusMalusDTO, BonusMalus>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;
@@ -104,7 +102,6 @@
         public async Task<int> InsertAsync(BonusMalusDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BonusMalusDTO, BonusMalus>();
             var item = Mapper.Map<BonusMalusDTO, BonusMalus>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;

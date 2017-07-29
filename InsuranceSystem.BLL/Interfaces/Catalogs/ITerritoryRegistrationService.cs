@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
 
-    interface ITerritoryRegistrationService
+    public interface ITerritoryRegistrationService : IService<TerritoryRegistrationDTO>
     {
     }
 }

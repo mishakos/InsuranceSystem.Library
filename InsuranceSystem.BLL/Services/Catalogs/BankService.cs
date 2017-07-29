@@ -12,13 +12,28 @@
     using UnitOfWork.Catalogs;
 
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
+    using System.Linq;
 
-    public class BankService : IBankService, IService<BankDTO>
+    public class BankService : IBankService
     {
+        private IMapper mapper;
+        readonly AutoMapperConfig autoMapperConfig;
         readonly IUnitOfWork<Bank> bankUnit;
         public BankService()
         {
             bankUnit = new BankUnit();
+            InitializeMapping();
+        }
+
+        private void InitializeMapping()
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Bank, BankDTO>()
+                            .ForMember(dest => dest.ParentName, opt => opt.MapFrom(src => src.Parent.Name))
+                            .ReverseMap().ForSourceMember(src => src.Id, opt => opt.Ignore())
+                                         .ForSourceMember(src => src.DateCreate, opt => opt.Ignore())
+                                         .ForSourceMember(src => src.ModifiedDate, opt => opt.Ignore()));
+            mapper = config.CreateMapper();
         }
 
         public int Delete(BankDTO entity)
@@ -56,108 +71,93 @@
 
         public IEnumerable<BankDTO> GetAll()
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return Mapper.Map<IEnumerable<Bank>, IEnumerable<BankDTO>>(
-                bankUnit.Repository.GetAll());
+            return MapBankList(bankUnit.Repository.GetAll().ToList());
         }
 
-        public async Task<List<BankDTO>> GetAllAsync()
+        public async Task<List<BankDTO>> GetPagedAllAsync(int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>,
-                Task<List<BankDTO>>>(bankUnit.Repository.GetAllAsync());
+            return MapBankList(await bankUnit.Repository.GetPagedAllAsync(pageNum, pageSize));
         }
 
-        public async Task<List<BankDTO>> GetByAddressAsync(string address)
+        public async Task<List<BankDTO>> GetByAddressAsync(string address, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.Adress.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.Adress.ToUpper()
                 .Contains(address.ToUpper())));
         }
 
-        public async Task<List<BankDTO>> GetByCityAsync(string city)
+        public async Task<List<BankDTO>> GetByCityAsync(string city, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.City.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.City.ToUpper()
                 .Contains(city.ToUpper())));
         }
 
-        public async Task<List<BankDTO>> GetByEDRPOUAsync(string edrpou)
+        public async Task<List<BankDTO>> GetByEDRPOUAsync(string edrpou, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.EDRPOU.ToUpper().Contains(edrpou.ToUpper())));
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.EDRPOU.ToUpper()
+                .Contains(edrpou.ToUpper())));
         }
 
-        public async Task<List<BankDTO>> GetByFullNameAsync(string fullName)
+        public async Task<List<BankDTO>> GetByFullNameAsync(string fullName, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.FullName.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.FullName.ToUpper()
                 .Contains(fullName.ToUpper())));
         }
 
         public BankDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Bank, BankDTO>();
-            return Mapper.Map<Bank, BankDTO>(bankUnit.Repository.GetById((int)id));
+            return mapper.Map<Bank, BankDTO>(bankUnit.Repository.GetById((int)id));
         }
 
         public async Task<BankDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<Bank>, Task<BankDTO>>
-                (bankUnit.Repository.GetAsync(p => p.Id == id));
+            return Mapper.Map<Bank, BankDTO>
+                (await bankUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public async Task<List<BankDTO>> GetByMFOAsync(string mfo)
+        public async Task<List<BankDTO>> GetByMFOAsync(string mfo, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.MFO.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.MFO.ToUpper()
                 .Contains(mfo.ToUpper())));
         }
 
-        public async Task<List<BankDTO>> GetByPhonesAsync(string phones)
+        public async Task<List<BankDTO>> GetByPhonesAsync(string phones, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.Phones.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.Phones.ToUpper()
                 .Contains(phones.ToUpper())));
         }
 
-        public async Task<List<BankDTO>> GetByRateAsync(string rate)
+        public async Task<List<BankDTO>> GetByRateAsync(string rate, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.Rate.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.Rate.ToUpper()
                 .Contains(rate.ToUpper())));
         }
 
-        public async Task<List<BankDTO>> GetByRateSource(string rateSource)
+        public async Task<List<BankDTO>> GetByRateSource(string rateSource, int pageNum = 1, int pageSize = 20)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.RateSource.ToUpper()
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.RateSource.ToUpper()
                 .Contains(rateSource.ToUpper())));
         }
 
-        public async Task<List<BankDTO>> GetByParentId(int? id)
+        public async Task<List<BankDTO>> GetByParentId(int? id, int pageNum = 1, int pageSize = 20)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>
-                (bankUnit.Repository.GetManyAsync(p => p.ParentId == id));
+            return Mapper.Map<List<Bank>, List<BankDTO>>
+                (await bankUnit.Repository.GetManyAsync(p => p.ParentId == id));
         }
 
         public int Insert(BankDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BankDTO, Bank>();
             var item = Mapper.Map<BankDTO, Bank>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;
@@ -168,7 +168,6 @@
         public async Task<int> InsertAsync(BankDTO entity)
         {
             CheckForNull(entity);
-            Mapper.CreateMap<BankDTO, Bank>();
             var item = Mapper.Map<BankDTO, Bank>(entity);
             item.DateCreate = DateTime.Now;
             item.ModifiedDate = DateTime.Now;
@@ -212,10 +211,26 @@
             return await bankUnit.CommitAsync();
         }
 
+        public async Task<List<BankDTO>> GetByNameAsync(string name, int pageNum = 1, int pageSize = 20)
+        {
+            return MapBankList(await bankUnit.Repository
+                .GetPagedManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper()), pageNum, pageSize));
+        }
+
+
+        public async Task<List<BankDTO>> GetAllAsync()
+        {
+            return MapBankList(await bankUnit.Repository.GetAllAsync());
+        }
+
+        private List<BankDTO> MapBankList(List<Bank> items)
+        {
+            return mapper.Map<List<Bank>, List<BankDTO>>(items);
+        }
+
         public async Task<List<BankDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<Bank, BankDTO>();
-            return await Mapper.Map<Task<List<Bank>>, Task<List<BankDTO>>>(bankUnit.Repository
+            return Mapper.Map<List<Bank>, List<BankDTO>>(await bankUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
     }

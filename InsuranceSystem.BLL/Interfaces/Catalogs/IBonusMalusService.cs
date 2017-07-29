@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    interface IBonusMalusService
+    public interface IBonusMalusService : IService<BonusMalusDTO>
     {
     }
 }

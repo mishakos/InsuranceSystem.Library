@@ -52,10 +52,16 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Data.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
@@ -107,6 +113,18 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -161,6 +179,10 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -219,12 +241,25 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Catalogs\AreaOfUseController.cs" />
+    <Compile Include="Controllers\Catalogs\BankAccountController.cs" />
     <Compile Include="Controllers\Catalogs\BankController.cs" />
     <Compile Include="Controllers\Catalogs\BlankTypeController.cs" />
     <Compile Include="Controllers\Catalogs\BlankController.cs" />
+    <Compile Include="Controllers\Catalogs\BonusMalusController.cs" />
+    <Compile Include="Controllers\Catalogs\BrandController.cs" />
+    <Compile Include="Controllers\Catalogs\ClientController.cs" />
+    <Compile Include="Controllers\Catalogs\ContractTermController.cs" />
+    <Compile Include="Controllers\Catalogs\CurrencyController.cs" />
+    <Compile Include="Controllers\Catalogs\DepartmentController.cs" />
+    <Compile Include="Controllers\Catalogs\DocumentCategoryController.cs" />
+    <Compile Include="Controllers\Catalogs\DriverExperienceController.cs" />
+    <Compile Include="Controllers\Catalogs\DriversNumberController.cs" />
+    <Compile Include="Controllers\Catalogs\FirmController.cs" />
     <Compile Include="Controllers\Documents\PostBlankController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -233,7 +268,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Catalogs\AdressModel.cs" />
+    <Compile Include="Models\Catalogs\AddressModel.cs" />
     <Compile Include="Models\Catalogs\AreaOfUseModel.cs" />
     <Compile Include="Models\Catalogs\BankAccountModel.cs" />
     <Compile Include="Models\Catalogs\BankModel.cs" />
@@ -365,6 +400,68 @@
     <Content Include="Views\Blank\Delete.cshtml" />
     <Content Include="Views\BlankType\Details.cshtml" />
     <Content Include="Views\BlankType\Edit.cshtml" />
+    <Content Include="Views\BlankType\Delete.cshtml" />
+    <Content Include="Views\Brand\Index.cshtml" />
+    <Content Include="Views\Brand\Details.cshtml" />
+    <Content Include="Views\Brand\Create.cshtml" />
+    <Content Include="Views\Brand\Edit.cshtml" />
+    <Content Include="Views\Brand\Delete.cshtml" />
+    <Content Include="Views\Client\Delete.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Client\Details.cshtml" />
+    <Content Include="Views\Client\Create.cshtml" />
+    <Content Include="Views\Client\Edit.cshtml" />
+    <Content Include="Views\ContractTerm\Index.cshtml" />
+    <Content Include="Views\ContractTerm\Details.cshtml" />
+    <Content Include="Views\ContractTerm\Create.cshtml" />
+    <Content Include="Views\ContractTerm\Edit.cshtml" />
+    <Content Include="Views\ContractTerm\Delete.cshtml" />
+    <Content Include="Views\AreaOfUse\Index.cshtml" />
+    <Content Include="Views\AreaOfUse\Details.cshtml" />
+    <Content Include="Views\AreaOfUse\Create.cshtml" />
+    <Content Include="Views\AreaOfUse\Edit.cshtml" />
+    <Content Include="Views\AreaOfUse\Delete.cshtml" />
+    <Content Include="Views\BankAccount\Index.cshtml" />
+    <Content Include="Views\BankAccount\Details.cshtml" />
+    <Content Include="Views\BankAccount\Create.cshtml" />
+    <Content Include="Views\BankAccount\Edit.cshtml" />
+    <Content Include="Views\BankAccount\Delete.cshtml" />
+    <Content Include="Views\Currency\Index.cshtml" />
+    <Content Include="Views\Currency\Details.cshtml" />
+    <Content Include="Views\Currency\Create.cshtml" />
+    <Content Include="Views\Currency\Delete.cshtml" />
+    <Content Include="Views\Currency\Edit.cshtml" />
+    <Content Include="Views\BonusMalus\Index.cshtml" />
+    <Content Include="Views\BonusMalus\Delete.cshtml" />
+    <Content Include="Views\BonusMalus\Edit.cshtml" />
+    <Content Include="Views\BonusMalus\Create.cshtml" />
+    <Content Include="Views\BonusMalus\Details.cshtml" />
+    <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Department\Details.cshtml" />
+    <Content Include="Views\Department\Create.cshtml" />
+    <Content Include="Views\Department\Edit.cshtml" />
+    <Content Include="Views\Department\Delete.cshtml" />
+    <Content Include="Views\DocumentCategory\Index.cshtml" />
+    <Content Include="Views\DocumentCategory\Details.cshtml" />
+    <Content Include="Views\DocumentCategory\Create.cshtml" />
+    <Content Include="Views\DocumentCategory\Edit.cshtml" />
+    <Content Include="Views\DocumentCategory\Delete.cshtml" />
+    <Content Include="Views\DriverExperience\Index.cshtml" />
+    <Content Include="Views\DriverExperience\Details.cshtml" />
+    <Content Include="Views\DriverExperience\Create.cshtml" />
+    <Content Include="Views\DriverExperience\Edit.cshtml" />
+    <Content Include="Views\DriverExperience\Delete.cshtml" />
+    <Content Include="Views\DriversNumber\Index.cshtml" />
+    <Content Include="Views\DriversNumber\Details.cshtml" />
+    <Content Include="Views\DriversNumber\Create.cshtml" />
+    <Content Include="Views\DriversNumber\Edit.cshtml" />
+    <Content Include="Views\DriversNumber\Delete.cshtml" />
+    <Content Include="Views\Firm\Index.cshtml" />
+    <Content Include="Views\Firm\Details.cshtml" />
+    <Content Include="Views\Firm\Create.cshtml" />
+    <Content Include="Views\Firm\Edit.cshtml" />
+    <Content Include="Views\Firm\Delete.cshtml" />
+    <Content Include="Views\Bank\_GridViewPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -379,6 +476,10 @@
     <ProjectReference Include="..\InsuranceSystem.BLL\InsuranceSystem.BLL.csproj">
       <Project>{5d09f307-9b53-4057-837d-31585b2a4458}</Project>
       <Name>InsuranceSystem.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InsuranceSystem.Common\InsuranceSystem.Common.csproj">
+      <Project>{3068bf6a-7c36-4cbe-91e0-dec7e2328d3a}</Project>
+      <Name>InsuranceSystem.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -11,13 +11,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    public class DepartmentService : IDepartmentService, IService<DepartmentDTO>
+    using InsuranceSystem.BLL.Infrastructure;
+
+    public class DepartmentService : IDepartmentService
     {
         readonly IUnitOfWork<Department> departmentUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public DepartmentService()
         {
             departmentUnit = new DepartmentUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(DepartmentDTO entity)
@@ -57,45 +61,39 @@
 
         public IEnumerable<DepartmentDTO> GetAll()
         {
-            Mapper.CreateMap<Department, DepartmentDTO>();
             return Mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentDTO>>(departmentUnit
                 .Repository.GetAll());
         }
 
         public async Task<List<DepartmentDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<Department, DepartmentDTO>();
-            return await Mapper.Map<Task<List<Department>>, Task<List<DepartmentDTO>>>(departmentUnit
+            return Mapper.Map<List<Department>, List<DepartmentDTO>>(await departmentUnit
                 .Repository.GetAllAsync()); 
         }
 
         public async Task<List<DepartmentDTO>> GetByFirmIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Department, DepartmentDTO>();
-            return await Mapper.Map<Task<List<Department>>, Task<List<DepartmentDTO>>>(
+            return Mapper.Map<List<Department>, List<DepartmentDTO>>(await
                 departmentUnit.Repository.GetManyAsync(p => p.FirmId == id));
         }
 
         public DepartmentDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Department, DepartmentDTO>();
             return Mapper.Map<Department, DepartmentDTO>(departmentUnit.Repository.GetById((int)id));
         }
 
         public async Task<DepartmentDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<Department, DepartmentDTO>();
-            return await Mapper.Map<Task<Department>, Task<DepartmentDTO>>(departmentUnit.Repository
+            return  Mapper.Map<Department, DepartmentDTO>(await departmentUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
         public async Task<List<DepartmentDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<Department, DepartmentDTO>();
-            return await Mapper.Map<Task<List<Department>>, Task<List<DepartmentDTO>>>(departmentUnit
+            return  Mapper.Map<List<Department>, List<DepartmentDTO>>(await departmentUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 

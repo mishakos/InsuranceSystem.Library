@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
 
-    interface IFraudAttemptService
+    public interface IFraudAttemptService : IService<FraudAttemptDTO>
     {
 
     }

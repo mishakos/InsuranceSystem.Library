@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
 
-    interface IInsuranceTypeService
+    public interface IInsuranceTypeService : IService<InsuranceTypeDTO>
     {
     }
 }

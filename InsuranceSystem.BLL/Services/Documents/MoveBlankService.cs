@@ -14,7 +14,7 @@
     using System.Threading.Tasks;
     using UnitOfWork;
 
-    public class MoveBlankService : IMoveBlankService, IService<MoveBlankDTO>
+    public class MoveBlankService : IMoveBlankService
     {
         readonly IUnitOfWork<MoveBlank> moveBlankUnit;
 
@@ -23,34 +23,16 @@
             moveBlankUnit = new MoveBlankUnit();
         }
 
-        public int Delete(MoveBlankDTO entity)
+        public async Task DeleteMoveBlankAsync(int? id)
         {
-            throw new NotImplementedException();
-        }
-
-        public int Delete(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> DeleteAsync(MoveBlankDTO entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> DeleteAsync(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteMoveBlank(int? id)
-        {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            moveBlankUnit.Repository.Delete((int)id);
+            await moveBlankUnit.CommitAsync();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            moveBlankUnit.Dispose();
         }
 
         public IEnumerable<MoveBlankDTO> GetAll()
@@ -65,32 +47,35 @@
 
         public MoveBlankDTO GetById(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            var item = moveBlankUnit.Repository.GetById((int)id);
+            CheckForNull(item);
+            return Mapper.Map<MoveBlank, MoveBlankDTO>(item);
         }
 
-        public Task<MoveBlankDTO> GetByIdAsync(int? id)
+        public async Task<MoveBlankDTO> GetByIdAsync(int? id)
         {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            var item = await moveBlankUnit.Repository.GetAsync(p => p.Id == id);
+            return Mapper.Map<MoveBlank, MoveBlankDTO>(item);
         }
 
-        public Task<List<MoveBlankDTO>> GetByNameAsync(string name)
+        public async Task<List<MoveBlankDTO>> GetByNumberAsync(string name)
         {
-            throw new NotImplementedException();
+            return Mapper.Map<List<MoveBlank>, List<MoveBlankDTO>>(await moveBlankUnit
+                .Repository.GetManyAsync(p => p.Number.ToLower().Contains(name.ToLower())));
         }
 
-        public MoveBlankDTO GetMoveBlank(int? id)
+        public async Task<IEnumerable<MoveBlankDTO>> GetMoveBlanksAsync()
         {
-            throw new NotImplementedException();
+            return Mapper.Map<IEnumerable<MoveBlank>, List<MoveBlankDTO>>(await moveBlankUnit
+                .Repository.GetAllAsync());
         }
 
-        public IEnumerable<MoveBlankDTO> GetMoveBlanks()
+        public async Task HoldMoveBlankAsync(int? id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void HoldMoveBlank(int? id)
-        {
-            throw new NotImplementedException();
+            CheckForNull(id);
+            
         }
 
         public int Insert(MoveBlankDTO entity)
@@ -103,12 +88,12 @@
             throw new NotImplementedException();
         }
 
-        public void MakeMoveBlank(MoveBlankDTO moveBlankDTO)
+        public Task MakeMoveBlankAsync(MoveBlankDTO moveBlankDTO)
         {
             throw new NotImplementedException();
         }
 
-        public void UnHoldMoveBlank(int? id)
+        public Task UnHoldMoveBlankAsync(int? id)
         {
             throw new NotImplementedException();
         }
@@ -118,12 +103,7 @@
             throw new NotImplementedException();
         }
 
-        public Task<int> UpdateAsync(MoveBlankDTO entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateMoveBlank(MoveBlankDTO moveBlankDTO)
+        public Task UpdateMoveBlankAsync(MoveBlankDTO moveBlankDTO)
         {
             throw new NotImplementedException();
         }

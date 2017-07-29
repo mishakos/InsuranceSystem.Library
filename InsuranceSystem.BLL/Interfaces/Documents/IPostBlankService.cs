@@ -3,7 +3,7 @@
     using DTO.Documents;
     using System.Collections.Generic;
 
-    interface IPostBlankService
+    public interface IPostBlankService
     {
         void MakePostBlank(PostBlankDTO postBlankDTO);
         PostBlankDTO GetPostBlank(int? id);

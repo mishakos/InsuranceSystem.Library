@@ -2,16 +2,18 @@
 {
     using DTO.Documents;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
-    interface IMoveBlankService
+    public interface IMoveBlankService
     {
-        void MakeMoveBlank(MoveBlankDTO moveBlankDTO);
-        MoveBlankDTO GetMoveBlank(int? id);
-        IEnumerable<MoveBlankDTO> GetMoveBlanks();
-        void UpdateMoveBlank(MoveBlankDTO moveBlankDTO);
-        void HoldMoveBlank(int? id);
-        void UnHoldMoveBlank(int? id);
-        void DeleteMoveBlank(int? id);
+        Task MakeMoveBlankAsync(MoveBlankDTO moveBlankDTO);
+        MoveBlankDTO GetById(int? id);
+        Task<MoveBlankDTO> GetByIdAsync(int? id);
+        Task<IEnumerable<MoveBlankDTO>> GetMoveBlanksAsync();
+        Task UpdateMoveBlankAsync(MoveBlankDTO moveBlankDTO);
+        Task HoldMoveBlankAsync(int? id);
+        Task UnHoldMoveBlankAsync(int? id);
+        Task DeleteMoveBlankAsync(int? id);
         void Dispose();
     }
 }

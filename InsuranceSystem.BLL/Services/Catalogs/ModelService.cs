@@ -13,13 +13,14 @@
     using System.Threading.Tasks;
     using UnitOfWork;
 
-    public class ModelService : IModelService, IService<ModelDTO>
+    public class ModelService : IModelService
     {
         readonly IUnitOfWork<Model> mUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public ModelService()
         {
-            Mapper.CreateMap<Model, ModelDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             mUnit = new ModelUnit();
         }
 
@@ -63,7 +64,7 @@
 
         public async Task<List<ModelDTO>> GetAllAsync()
         {
-            return await Mapper.Map<Task<List<ModelDTO>>>(mUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<ModelDTO>>(await mUnit.Repository.GetAllAsync());
         }
 
         public ModelDTO GetById(int? id)
@@ -75,12 +76,12 @@
         public async Task<ModelDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            return await Mapper.Map<Task<ModelDTO>>(mUnit.Repository.GetAsync(p => p.Id == id));
+            return Mapper.Map<ModelDTO>(await mUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public Task<List<ModelDTO>> GetByNameAsync(string name)
+        public async  Task<List<ModelDTO>> GetByNameAsync(string name)
         {
-            return Mapper.Map<Task<List<ModelDTO>>>(mUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
+            return Mapper.Map<List<ModelDTO>>(await mUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
             .Contains(name.ToUpper())));
         }
 

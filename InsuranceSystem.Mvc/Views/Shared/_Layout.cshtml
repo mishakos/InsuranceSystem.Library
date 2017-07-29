@@ -25,14 +25,19 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li class="class=dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">Catalogs<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Client", "Index", "Client")</li>
                             <li>@Html.ActionLink("Banks", "Index", "Bank")</li>
+                            <li class="glyphicon-header"></li>
+                            <li>@Html.ActionLink("Area of use", "Index", "AreaOfUse")</li>
                             <li>@Html.ActionLink("Blanks", "Index", "Blank")</li>
                             <li>@Html.ActionLink("Blank Types", "Index", "BlankType")</li>
+                            <li>@Html.ActionLink("Brand", "Index", "Brand")</li>
+                            <li>@Html.ActionLink("Contract term", "Index", "ContractTerm")</li>
                         </ul>
-                        </li>
+                    </li>
 
                 </ul>
                 @Html.Partial("_LoginPartial")

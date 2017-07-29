@@ -14,7 +14,7 @@
     using System.Threading.Tasks;
     using UnitOfWork;
 
-    public class MTPLPolicyService : IMTPLPolicyService, IService<MTPLPolicyDTO>
+    public class MTPLPolicyService : IMTPLPolicyService
     {
         readonly IUnitOfWork<MTPLPolicy> mtplUnit;
 

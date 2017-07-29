@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class DriversNumberService : IDriversNumberService, IService<DriversNumberDTO>
+    public class DriversNumberService : IDriversNumberService
     {
         readonly IUnitOfWork<DriversNumber> dnUnit;
-
+        readonly AutoMapperConfig autoMapperConfig;
         public DriversNumberService()
         {
             dnUnit = new DriversNumberUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(DriversNumberDTO entity)
@@ -61,36 +63,31 @@
 
         public IEnumerable<DriversNumberDTO> GetAll()
         {
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
             return Mapper.Map<IEnumerable<DriversNumber>, IEnumerable<DriversNumberDTO>>(dnUnit.Repository.GetAll());
         }
 
         public async Task<List<DriversNumberDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
-            return await Mapper.Map<Task<List<DriversNumber>>, Task<List<DriversNumberDTO>>>(dnUnit
+            return Mapper.Map<List<DriversNumber>, List<DriversNumberDTO>>(await dnUnit
                 .Repository.GetAllAsync());
         }
 
         public DriversNumberDTO GetById(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
             return Mapper.Map<DriversNumber, DriversNumberDTO>(dnUnit.Repository.GetById((int)id));
         }
 
         public async Task<DriversNumberDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
-            return await Mapper.Map<Task<DriversNumber>, Task<DriversNumberDTO>>(dnUnit.Repository
+            return Mapper.Map<DriversNumber, DriversNumberDTO>(await dnUnit.Repository
                 .GetAsync(p => p.Id == id));
         }
 
         public async Task<List<DriversNumberDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<DriversNumber, DriversNumberDTO>();
-            return await Mapper.Map<Task<List<DriversNumber>>, Task<List<DriversNumberDTO>>>(dnUnit.Repository
+            return Mapper.Map<List<DriversNumber>, List<DriversNumberDTO>>(await dnUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 

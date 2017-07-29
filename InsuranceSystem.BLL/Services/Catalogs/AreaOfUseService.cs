@@ -11,19 +11,22 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
     /// <summary>
     /// Areas of use - Catalog of Areas of use vehicles.
     /// used in calculation rate of MTPL Policy
     /// </summary>
-    public class AreaOfUseService : IAreaOfUseService, IService<AreaOfUseDTO>
+    public class AreaOfUseService : IAreaOfUseService
     {
+        readonly AutoMapperConfig autoMapperConfig;
         /// <summary>
         /// Connection to data layer by unit of work.
         /// </summary>
         readonly IUnitOfWork<AreaOfUse> areaOfUseUnit;
         public AreaOfUseService()
         {
+            autoMapperConfig = AutoMapperConfig.Instance;
             areaOfUseUnit = new AreasOfUseUnit();
         }
 
@@ -62,15 +65,13 @@
 
         public IEnumerable<AreaOfUseDTO> GetAll()
         {
-            Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
             return Mapper.Map<IEnumerable<AreaOfUse>, List<AreaOfUseDTO>>(
                 areaOfUseUnit.Repository.GetAll());
         }
 
         public async Task<List<AreaOfUseDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<List<AreaOfUse>>,Task<List<AreaOfUseDTO>>>(
+            return Mapper.Map<List<AreaOfUse>,List<AreaOfUseDTO>>(await
                 areaOfUseUnit.Repository.GetAllAsync());
         }
 
@@ -79,15 +80,13 @@
             CheckForNull(id);
             var item = areaOfUseUnit.Repository.GetById((int)id);
             CheckForNull(item);
-            Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
             return Mapper.Map<AreaOfUse, AreaOfUseDTO>(item);
         }
 
         public async Task<AreaOfUseDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<AreaOfUse>, Task<AreaOfUseDTO>>(
+            return  Mapper.Map<AreaOfUse, AreaOfUseDTO>(await
                 areaOfUseUnit.Repository.GetAsync(x => x.Id == id));
         }
 
@@ -96,7 +95,6 @@
             CheckForNull(entity);
             entity.DateCreate = DateTime.Now;
             entity.ModifiedDate = DateTime.Now;
-            Mapper.CreateMap<AreaOfUseDTO, AreaOfUse>();
             areaOfUseUnit.Repository.Insert(Mapper.Map<AreaOfUseDTO, AreaOfUse>(entity));
             return areaOfUseUnit.Commit();
         }
@@ -106,7 +104,6 @@
             CheckForNull(entity);
             entity.DateCreate = DateTime.Now;
             entity.ModifiedDate = DateTime.Now;
-            Mapper.CreateMap<AreaOfUseDTO, AreaOfUse>();
             areaOfUseUnit.Repository.Insert(Mapper.Map<AreaOfUseDTO, AreaOfUse>(entity));
             return await areaOfUseUnit.CommitAsync();
         }
@@ -142,15 +139,13 @@
 
         public async Task<List<AreaOfUseDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<List<AreaOfUse>>, Task<List<AreaOfUseDTO>>>(areaOfUseUnit
+            return Mapper.Map<List<AreaOfUse>, List<AreaOfUseDTO>>(await areaOfUseUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public async Task<List<AreaOfUseDTO>> GetByParentAsync(int? id)
         {
-            Mapper.CreateMap<AreaOfUse, AreaOfUseDTO>();
-            return await Mapper.Map<Task<List<AreaOfUse>>, Task<List<AreaOfUseDTO>>>(areaOfUseUnit
+            return Mapper.Map<List<AreaOfUse>, List<AreaOfUseDTO>>(await areaOfUseUnit
                 .Repository.GetManyAsync(p => p.ParentId == id));
         }
     }

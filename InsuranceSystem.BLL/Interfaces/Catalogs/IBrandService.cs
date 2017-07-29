@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IBrandService
+    public interface IBrandService : IService<BrandDTO>
     {
     }
 }

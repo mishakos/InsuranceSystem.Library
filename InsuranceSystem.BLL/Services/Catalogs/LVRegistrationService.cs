@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class LVRegistrationService : ILocalityVehicleRegistrationService, IService<LocalityVehicleRegistrationDTO>
+    public class LVRegistrationService : ILocalityVehicleRegistrationService
     {
         readonly IUnitOfWork<LocalityVehicleRegistration> lvrUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public LVRegistrationService()
         {
-            Mapper.CreateMap<LocalityVehicleRegistration, LocalityVehicleRegistrationDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             lvrUnit = new LocalityVehicleRegistrationUnit();
         }
 
@@ -64,7 +66,7 @@
 
         public async Task<List<LocalityVehicleRegistrationDTO>> GetAllAsync()
         {
-            return await Mapper.Map<Task<List<LocalityVehicleRegistrationDTO>>>(lvrUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<LocalityVehicleRegistrationDTO>>(await lvrUnit.Repository.GetAllAsync());
         }
 
         public LocalityVehicleRegistrationDTO GetById(int? id)
@@ -73,15 +75,15 @@
             return Mapper.Map<LocalityVehicleRegistrationDTO>(lvrUnit.Repository.GetById((int)id));
         }
 
-        public Task<LocalityVehicleRegistrationDTO> GetByIdAsync(int? id)
+        public async  Task<LocalityVehicleRegistrationDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            return Mapper.Map< Task<LocalityVehicleRegistrationDTO>>(lvrUnit.Repository.GetAsync(p => p.Id == id));
+            return Mapper.Map<LocalityVehicleRegistrationDTO>( await lvrUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public Task<List<LocalityVehicleRegistrationDTO>> GetByNameAsync(string name)
+        public async Task<List<LocalityVehicleRegistrationDTO>> GetByNameAsync(string name)
         {
-            return Mapper.Map<Task<List<LocalityVehicleRegistrationDTO>>>(lvrUnit.Repository.GetManyAsync(p => p.Name
+            return Mapper.Map<List<LocalityVehicleRegistrationDTO>>(await lvrUnit.Repository.GetManyAsync(p => p.Name
             .ToUpper().Contains(name.ToUpper())));
         }
 

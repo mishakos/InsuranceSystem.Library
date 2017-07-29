@@ -4,16 +4,18 @@ namespace InsuranceSystem.BLL.Interfaces.Catalogs
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IBankService
+    public interface IBankService : IService<BankDTO>
     {
-        Task<List<BankDTO>> GetByMFOAsync(string mfo);
-        Task<List<BankDTO>> GetByFullNameAsync(string fullName);
-        Task<List<BankDTO>> GetByEDRPOUAsync(string edrpou);
-        Task<List<BankDTO>> GetByCityAsync(string city);
-        Task<List<BankDTO>> GetByAddressAsync(string address);
-        Task<List<BankDTO>> GetByPhonesAsync(string phones);
-        Task<List<BankDTO>> GetByRateAsync(string rate);
-        Task<List<BankDTO>> GetByRateSource(string rateSource);
-        Task<List<BankDTO>> GetByParentId(int? id);
+        Task<List<BankDTO>> GetByMFOAsync(string mfo, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByFullNameAsync(string fullName, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByEDRPOUAsync(string edrpou, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByCityAsync(string city, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByAddressAsync(string address, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByPhonesAsync(string phones, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByRateAsync(string rate, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByRateSource(string rateSource, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetByParentId(int? id, int pageNum, int pageSize);
+        Task<List<BankDTO>> GetPagedAllAsync(int pageNum, int pageSize);
+
     }
 }

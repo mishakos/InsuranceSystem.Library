@@ -14,7 +14,7 @@
     using UnitOfWork;
     using System.Threading.Tasks;
 
-    public class PostBlankService : IPostBlankService, IService<PostBlankDTO>
+    public class PostBlankService : IPostBlankService
     {
         readonly IUnitOfWork<PostBlank> postBlankUnit;
 

@@ -8,6 +8,7 @@ namespace InsuranceSystem.Library.Models.Catalogs
 {
     public class BlankType : Catalog
     {
+        public virtual BlankType Parent { get; set; }
         public virtual List<Blank> Blanks { get; set; }
 
     }

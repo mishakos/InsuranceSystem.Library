@@ -1,13 +1,17 @@
-﻿using AutoMapper;
+﻿using DevExpress.Web.Mvc;
+using AutoMapper;
 using InsuranceSystem.BLL.DTO.Catalogs;
 using InsuranceSystem.BLL.Interfaces.Catalogs;
 using InsuranceSystem.BLL.Services.Catalogs;
+using InsuranceSystem.Common;
 using InsuranceSystem.MVC.Models.Catalogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using InsuranceSystem.Mvc.App_Start;
 
 namespace InsuranceSystem.Mvc.Controllers.Catalogs
 {
@@ -20,57 +24,67 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         }
 
         // GET: Bank
-        public async System.Threading.Tasks.Task<ActionResult> Index(string sortOrder)
+        public ActionResult Index()
         {
-            ViewBag.MFOSortParam = String.IsNullOrEmpty(sortOrder) ? "mfo_desc" : "";
-            ViewBag.NameSortParam = sortOrder == "Name" ? "name_desc" : "Name";
-            ViewBag.RateSortParam = sortOrder == "Rate" ? "rate_desc" : "Rate";
-            var list = new List<BankModel>();
-            try
+            return View();
+        }
+
+        private void PopulateDropDownSearchParam()
+        {
+            ViewData["SearchParam"] = new SelectList(new Dictionary<string, string>
             {
-                var collection = await bankService.GetAllAsync();
-                list = Mapper.Map<List<BankDTO>, List<BankModel>>(collection);
-            }
-            catch (Exception ex)
+                [nameof(BankModel.EDRPOU)] = nameof(BankModel.EDRPOU),
+                [nameof(BankModel.MFO)] = nameof(BankModel.MFO),
+                [nameof(BankModel.Adress)] = nameof(BankModel.Adress),
+                [nameof(BankModel.City)] = nameof(BankModel.City),
+                [nameof(BankModel.FullName)] = nameof(BankModel.FullName),
+                [nameof(BankModel.ParentId)] = nameof(BankModel.ParentId),
+                [nameof(BankModel.Phones)] = nameof(BankModel.Phones),
+                [nameof(BankModel.Rate)] = nameof(BankModel.Rate),
+                [nameof(BankModel.RateSource)] = nameof(BankModel.RateSource)
+            }, "Key", "Value");
+        }
+
+        private async Task<IEnumerable<BankDTO>> FindItems(string searchParam, string searchString, int page, int pageSize)
+        {
+            var result = new List<BankDTO>();
+            switch (searchParam)
             {
-                ModelState.AddModelError("", $"Unable to get list of banks. Detail info - {ex.Message}");
+                case nameof(BankModel.EDRPOU):
+                    result = await bankService.GetByEDRPOUAsync(searchString, page, pageSize);
+                    break;
+                case nameof(BankModel.MFO):
+                    result = await bankService.GetByMFOAsync(searchString, page, pageSize);
+                    break;
+                case nameof(BankModel.Adress):
+                    result = await bankService.GetByAddressAsync(searchString, page, pageSize);
+                    break;
+                case nameof(BankModel.City):
+                    result = await bankService.GetByCityAsync(searchString, page, pageSize);
+                    break;
+                case nameof(BankModel.FullName):
+                    result = await bankService.GetByFullNameAsync(searchString, page, pageSize);
+                    break;
+                case nameof(BankModel.ParentId):
+                    var id = int.Parse(searchString);
+                    result = await bankService.GetByParentId(id, page, pageSize);
+                    break;
+                case nameof(BankModel.Phones):
+                    result = await bankService.GetByPhonesAsync(searchString, page, pageSize);
+                    break;
+                case nameof(BankModel.Rate):
+                    result = await bankService.GetByRateAsync(searchString, page, pageSize);
+                    break;
+                case nameof(BankModel.RateSource):
+                    result = await bankService.GetByRateSource(searchString, page, pageSize);
+                    break;
+                default:
+                    result = await bankService.GetPagedAllAsync(page, pageSize);
+                    break;
             }
 
-            switch (sortOrder)
-            {
-                case "":
-                    {
-                        list = (List<BankModel>)list.OrderBy(p => p.MFO);
-                        break;
-                    }
-                case "mfo_desc":
-                    {
-                        list = (List<BankModel>)list.OrderByDescending(p => p.MFO);
-                        break;
-                    }
-                case "Name":
-                    {
-                        list = (List<BankModel>)list.OrderBy(p => p.Name);
-                        break;
-                    }
-                case "name_desc":
-                    {
-                        list = (List<BankModel>)list.OrderByDescending(p => p.Name);
-                        break;
-                    }
-                case "Rate":
-                    {
-                        list = (List<BankModel>)list.OrderBy(p => p.Rate);
-                        break;
-                    }
-                case "rate_desc":
-                    {
-                        list = (List<BankModel>)list.OrderByDescending(p => p.Rate);
-                        break;
-                    }
-            }
+            return result;
 
-            return View(list);
         }
 
         // GET: Bank/Details/5
@@ -102,7 +116,7 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         public ActionResult Create([Bind(Exclude = "Id, DateCreate, ModifiedDate")] BankModel model)
         {
             try
-            {                
+            {
                 bankService.Insert(Mapper.Map<BankModel, BankDTO>(model));
                 return RedirectToAction("Index");
             }
@@ -194,6 +208,52 @@ namespace InsuranceSystem.Mvc.Controllers.Catalogs
         public new void Dispose()
         {
             bankService.Dispose();
+        }
+
+
+        [ValidateInput(false)]
+        public async Task<ActionResult> GridViewPartial()
+        {
+            List<BankModel> model = await GetBanksPage();
+            return PartialView("~/Views/Bank/_GridViewPartial.cshtml", model);
+        }
+
+        private static List<BankModel> MapBankDTOBankModel(IEnumerable<BankDTO> items)
+        {
+            return (from p in items
+                    select new BankModel()
+                    {
+                        Adress = p.Address,
+                        City = p.City,
+                        CorrespondingAccount = p.CorrespondingAccount,
+                        DateCreate = p.DateCreate,
+                        EDRPOU = p.EDRPOU,
+                        FullName = p.FullName,
+                        Id = p.Id,
+                        IsDelete = p.IsDelete,
+                        IsGroup = p.IsGroup,
+                        MFO = p.MFO,
+                        ModifiedDate = p.ModifiedDate,
+                        Name = p.Name,
+                        ParentId = p.ParentId,
+                        ParentName = p.ParentName,
+                        Phones = p.Phones,
+                        Rate = p.Rate,
+                        RateSource = p.RateSource
+                    }).ToList();
+        }
+
+        public async Task<ActionResult> GridViewPagingAction(GridViewPagerState pager)
+        {
+            List<BankModel> model = await GetBanksPage(pager.PageIndex, pager.PageSize);
+            return PartialView("~/Views/Bank/_GridViewPartial.cshtml", model);
+        }
+
+        private async Task<List<BankModel>> GetBanksPage(int pageIndex = 0, int PageSize = 10)
+        {
+            var items = await bankService.GetPagedAllAsync(pageIndex + 1, PageSize);
+            var model = MapBankDTOBankModel(items);
+            return model;
         }
     }
 }

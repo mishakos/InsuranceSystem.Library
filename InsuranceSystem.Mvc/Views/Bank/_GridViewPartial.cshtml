@@ -1,0 +1,44 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "GridView";
+        settings.CallbackRouteValues = new { Controller = "Bank", Action = "GridViewPartial" };
+        settings.CustomBindingRouteValuesCollection.Add(
+            GridViewOperationType.Paging,
+            new { Controller = "Bank", Action = "GridViewPagingAction" }
+        );
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("MFO");
+        settings.Columns.Add("FullName");
+        settings.Columns.Add("EDRPOU");
+        settings.Columns.Add("City");
+        settings.Columns.Add("Id");
+        settings.Columns.Add("Name");
+        settings.Columns.Add("IsDelete");
+        settings.Columns.Add("DateCreate");
+        settings.Columns.Add("ModifiedDate");
+        settings.Columns.Add("IsGroup");
+    });
+    if (ViewData["EditError"] != null){
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

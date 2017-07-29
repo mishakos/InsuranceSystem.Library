@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
 
-    interface IVehiclesNumberService
+    public interface IVehiclesNumberService : IService<VehiclesNumberDTO>
     {
     }
 }

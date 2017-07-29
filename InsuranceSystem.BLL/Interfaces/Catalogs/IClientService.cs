@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IClientService
+    public interface IClientService : IService<ClientDTO>
     {
         Task<List<ClientDTO>> GetByFullNameAsync(string name);
         Task<List<ClientDTO>> GetByITNAsync(string itn);

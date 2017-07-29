@@ -11,13 +11,17 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
-    public class DocumentCategoryService : IDocumentCategoryService, IService<DocumentCategoryDTO>
+    using InsuranceSystem.BLL.Infrastructure;
+
+    public class DocumentCategoryService : IDocumentCategoryService
     {
         readonly IUnitOfWork<DocumentCategory> dcUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public DocumentCategoryService()
         {
             dcUnit = new DocumentCategoryUnit();
+            autoMapperConfig = AutoMapperConfig.Instance;
         }
 
         public int Delete(DocumentCategoryDTO entity)
@@ -57,15 +61,13 @@
 
         public IEnumerable<DocumentCategoryDTO> GetAll()
         {
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
             return Mapper.Map<IEnumerable<DocumentCategory>, IEnumerable<DocumentCategoryDTO>>(dcUnit
                 .Repository.GetAll());
         }
 
         public async Task<List<DocumentCategoryDTO>> GetAllAsync()
         {
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
-            return await Mapper.Map<Task<List<DocumentCategory>>, Task<List<DocumentCategoryDTO>>>(dcUnit
+            return  Mapper.Map<List<DocumentCategory>, List<DocumentCategoryDTO>>(await dcUnit
                 .Repository.GetAllAsync());
         }
 
@@ -74,22 +76,19 @@
             CheckForNull(id);
             var item = dcUnit.Repository.GetById((int)id);
             CheckForNull(item);
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
             return Mapper.Map<DocumentCategory, DocumentCategoryDTO>(item);
         }
 
         public async Task<DocumentCategoryDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
-            return await Mapper.Map<Task<DocumentCategory>, Task<DocumentCategoryDTO>>(dcUnit
+            return  Mapper.Map<DocumentCategory, DocumentCategoryDTO>(await dcUnit
                 .Repository.GetAsync(p => p.Id == (int)id));
         }
 
         public async Task<List<DocumentCategoryDTO>> GetByNameAsync(string name)
         {
-            Mapper.CreateMap<DocumentCategory, DocumentCategoryDTO>();
-            return await Mapper.Map<Task<List<DocumentCategory>>, Task<List<DocumentCategoryDTO>>>(dcUnit
+            return  Mapper.Map<List<DocumentCategory>, List<DocumentCategoryDTO>>(await dcUnit
                 .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 

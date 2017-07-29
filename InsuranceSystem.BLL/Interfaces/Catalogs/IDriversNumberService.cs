@@ -3,7 +3,7 @@
     using DTO.Catalogs;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    interface IDriversNumberService
+    public interface IDriversNumberService : IService<DriversNumberDTO>
     {
     }
 }

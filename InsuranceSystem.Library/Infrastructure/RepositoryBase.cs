@@ -81,7 +81,10 @@ namespace InsuranceSystem.Library.Infrastructure
         {
             return await Dbset.ToListAsync<TEntity>();
         }
-
+        public async Task<List<TEntity>> GetPagedAllAsync(int pageNum = 1, int pageSize = 20)
+        {
+            return await Dbset.Skip((pageNum - 1) * pageSize).Take(pageSize).ToListAsync<TEntity>();
+        }
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> @where)
         {
             return await Dbset.Where(where).FirstOrDefaultAsync();
@@ -90,6 +93,10 @@ namespace InsuranceSystem.Library.Infrastructure
         public async Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> @where)
         {
             return await Dbset.Where(where).ToListAsync();
+        }
+        public async Task<List<TEntity>> GetPagedManyAsync(Expression<Func<TEntity, bool>> @where, int pageNum = 1, int pageSize = 20)
+        {
+            return await Dbset.Where(where).Skip((pageNum - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         protected override void DisposeCore()

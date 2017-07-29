@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class InsuranceTypeService : IInsuranceTypeService, IService<InsuranceTypeDTO>
+    public class InsuranceTypeService : IInsuranceTypeService
     {
         readonly IUnitOfWork<InsuranceType> itUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public InsuranceTypeService()
         {
-            Mapper.CreateMap<InsuranceType, InsuranceTypeDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             itUnit = new InsuranceTypeUnit();
         }
 
@@ -64,7 +66,7 @@
 
         public async Task<List<InsuranceTypeDTO>> GetAllAsync()
         {
-            return await Mapper.Map<Task<List<InsuranceTypeDTO>>>(itUnit.Repository.GetAllAsync());
+            return Mapper.Map<List<InsuranceTypeDTO>>(await itUnit.Repository.GetAllAsync());
         }
 
         public InsuranceTypeDTO GetById(int? id)
@@ -76,12 +78,12 @@
         public async Task<InsuranceTypeDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            return await Mapper.Map<Task<InsuranceTypeDTO>>(itUnit.Repository.GetAsync((p => p.Id == id)));
+            return Mapper.Map<InsuranceTypeDTO>(await itUnit.Repository.GetAsync((p => p.Id == id)));
         }
 
         public async Task<List<InsuranceTypeDTO>> GetByNameAsync(string name)
         {
-            return await Mapper.Map<Task<List<InsuranceTypeDTO>>>(itUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
+            return Mapper.Map<List<InsuranceTypeDTO>>(await itUnit.Repository.GetManyAsync(p => p.Name.ToUpper()
             .Contains(name.ToUpper())));
         }
 

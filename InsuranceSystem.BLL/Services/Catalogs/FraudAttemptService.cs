@@ -11,14 +11,16 @@
     using UnitOfWork;
     using UnitOfWork.Catalogs;
     using static Validation.CheckValues;
+    using InsuranceSystem.BLL.Infrastructure;
 
-    public class FraudAttemptService : IFraudAttemptService, IService<FraudAttemptDTO>
+    public class FraudAttemptService : IFraudAttemptService
     {
         readonly IUnitOfWork<FraudAttempt> faUnit;
+        readonly AutoMapperConfig autoMapperConfig;
 
         public FraudAttemptService()
         {
-            Mapper.CreateMap<FraudAttempt, FraudAttemptDTO>();
+            autoMapperConfig = AutoMapperConfig.Instance;
             faUnit = new FraudAttemptUnit();
         }
 
@@ -65,7 +67,7 @@
 
         public async Task<List<FraudAttemptDTO>> GetAllAsync()
         {
-            return await Mapper.Map<Task<List<FraudAttempt>>, Task<List<FraudAttemptDTO>>>(faUnit
+            return Mapper.Map<List<FraudAttempt>, List<FraudAttemptDTO>>(await faUnit
                 .Repository.GetAllAsync());
         }
 
@@ -79,12 +81,12 @@
         {
             CheckForNull(id);
             
-            return await Mapper.Map<Task<FraudAttemptDTO>>(faUnit.Repository.GetAsync(p => p.Id == id));
+            return Mapper.Map<FraudAttemptDTO>(await faUnit.Repository.GetAsync(p => p.Id == id));
         }
 
         public async Task<List<FraudAttemptDTO>> GetByNameAsync(string name)
         {
-            return await Mapper.Map<Task<List<FraudAttemptDTO>>>(faUnit.Repository
+            return Mapper.Map<List<FraudAttemptDTO>>(await faUnit.Repository
                 .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
