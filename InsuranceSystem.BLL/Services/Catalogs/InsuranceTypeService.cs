@@ -78,7 +78,7 @@
         public async Task<InsuranceTypeDTO> GetByIdAsync(int? id)
         {
             CheckForNull(id);
-            return await Mapper.Map<Task<InsuranceTypeDTO>>(itUnit.Repository.GetAsync((p => p.Id == id)));
+            return Mapper.Map<InsuranceTypeDTO>(await itUnit.Repository.GetAsync((p => p.Id == id)));
         }
 
         public async Task<List<InsuranceTypeDTO>> GetByNameAsync(string name)

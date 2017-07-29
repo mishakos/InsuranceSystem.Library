@@ -85,7 +85,8 @@
         public async Task<List<BonusMalusDTO>> GetByNameAsync(string name)
         {
             return Mapper.Map<List<BonusMalus>, List<BonusMalusDTO>>
-                (await bonusMalusUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+                (await bonusMalusUnit.Repository
+                .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(BonusMalusDTO entity)

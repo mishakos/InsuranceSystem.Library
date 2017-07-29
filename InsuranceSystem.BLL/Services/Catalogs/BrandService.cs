@@ -93,7 +93,8 @@
         public async Task<List<BrandDTO>> GetByNameAsync(string name)
         {
             return  Mapper.Map<List<Brand>, List<BrandDTO>>(await brandUnit
-                .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+                .Repository.GetManyAsync(p => p.Name.ToUpper()
+                .Contains(name.ToUpper())));
         }
 
         public int Insert(BrandDTO entity)

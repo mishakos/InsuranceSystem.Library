@@ -71,7 +71,8 @@
         public async Task<List<BankAccountDTO>> GetByAccountNumberAsync(string number)
         {
            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await
-                bankAccountUnit.Repository.GetManyAsync(p => p.AccountNumber.Trim() == number));
+                bankAccountUnit.Repository.GetManyAsync(p => 
+                p.AccountNumber.Trim() == number));
         }
 
         public async Task<List<BankAccountDTO>> GetByBankIdAsync(int? id)
@@ -121,14 +122,16 @@
         public int Insert(BankAccountDTO entity)
         {
             CheckForNull(entity);
-            bankAccountUnit.Repository.Insert(Mapper.Map<BankAccountDTO, BankAccount>(entity));
+            bankAccountUnit.Repository.Insert(Mapper
+                .Map<BankAccountDTO, BankAccount>(entity));
             return bankAccountUnit.Commit();
         }
 
         public async Task<int> InsertAsync(BankAccountDTO entity)
         {
             CheckForNull(entity);
-            bankAccountUnit.Repository.Insert(Mapper.Map<BankAccountDTO, BankAccount>(entity));
+            bankAccountUnit.Repository.Insert(Mapper
+                .Map<BankAccountDTO, BankAccount>(entity));
             return await bankAccountUnit.CommitAsync();
         }
 
@@ -167,8 +170,9 @@
 
         public async Task<List<BankAccountDTO>> GetByNameAsync(string name)
         {
-            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(await bankAccountUnit
-                .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+            return  Mapper.Map<List<BankAccount>, List<BankAccountDTO>>(
+                await bankAccountUnit.Repository
+                .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
     }
 }

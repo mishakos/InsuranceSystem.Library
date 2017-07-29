@@ -72,7 +72,8 @@ namespace InsuranceSystem.BLL.Services.Catalogs
         public BlankTypeDTO GetById(int? id)
         {
             CheckForNull(id);
-            return Mapper.Map<BlankType, BlankTypeDTO>(blankTypeUnit.Repository.GetById((int)id));
+            return Mapper.Map<BlankType, BlankTypeDTO>(blankTypeUnit
+                .Repository.GetById((int)id));
         }
 
         public async Task<BlankTypeDTO> GetByIdAsync(int? id)
@@ -82,10 +83,11 @@ namespace InsuranceSystem.BLL.Services.Catalogs
                 (await blankTypeUnit.Repository.GetAsync(p => p.Id == id));
         }
 
-        public async Task<List<BlankTypeDTO>> GetByName(string name)
+        public async Task<List<BlankTypeDTO>> GetByNameAsync(string name)
         {
             return Mapper.Map<List<BlankType>, List<BlankTypeDTO>>
-                (await blankTypeUnit.Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
+                (await blankTypeUnit.Repository
+                .GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
         }
 
         public int Insert(BlankTypeDTO entity)
@@ -136,10 +138,5 @@ namespace InsuranceSystem.BLL.Services.Catalogs
             return await blankTypeUnit.CommitAsync();
         }
 
-        public async Task<List<BlankTypeDTO>> GetByNameAsync(string name)
-        {
-            return Mapper.Map<List<BlankType>, List<BlankTypeDTO>>(await blankTypeUnit
-                .Repository.GetManyAsync(p => p.Name.ToUpper().Contains(name.ToUpper())));
-        }
     }
 }
